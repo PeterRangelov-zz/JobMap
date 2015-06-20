@@ -88,7 +88,7 @@ $(document).ready(function(){
                 //console.log(marker)
 
             });
-            var mcOptions = {gridSize: 20, maxZoom: 15};
+            var mcOptions = {gridSize: 50, maxZoom: 15};
             var mc = new MarkerClusterer(map, markers, mcOptions);
         }
     });
