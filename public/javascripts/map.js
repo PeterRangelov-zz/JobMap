@@ -2,7 +2,7 @@ $(document).ready(function(){
     var baseurl = "https://www.googleapis.com/fusiontables/v2/query?"
     var table_id = "1B8h_QWDJaZu4qTrG7_oUGAIbGilSO7wm451AscLz"
     var key = "AIzaSyBacZTiWnjBX4O6Z_-jpfo2WLTl2yRYTzs"
-    var query = baseurl + "sql=SELECT * FROM " + table_id + " LIMIT 5" + "&key=" +key
+    var query = baseurl + "sql=SELECT * FROM " + table_id + " LIMIT 4000" + "&key=" +key
 
 
     console.log("INNER WIDTH: " + window.innerWidth)
