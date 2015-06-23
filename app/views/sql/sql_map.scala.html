@@ -1,0 +1,31 @@
+
+@main {
+
+<script src="/assets/javascripts/map.js"></script>
+
+            <style type="text/css">
+                #googft-mapCanvas {
+                    height: 900px;
+                    width: 90%;
+                    position: absolute;
+                }
+            </style>
+
+            <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false&amp;v=3"></script>
+
+
+
+    <div class="container">
+        <div class="row-fluid">
+            <div class="small-12 medium-4 columns">
+                @searchbar()
+            </div>
+            <div class="small-12 medium-8 columns">
+                <div id="googft-mapCanvas"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+}

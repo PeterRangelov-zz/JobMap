@@ -15,4 +15,8 @@ public class Application extends Controller {
         return ok(map.render());
     }
 
+    public static Result sqlMap() {
+        return ok(views.html.sql.sql_map.render());
+    }
+
 }
