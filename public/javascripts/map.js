@@ -4,7 +4,7 @@ $(document).ready(function(){
     var key = "AIzaSyBacZTiWnjBX4O6Z_-jpfo2WLTl2yRYTzs"
     var limit;
     if (window.location.hostname=="localhost") {
-        limit = 20;
+        limit = 5000;
     }
     else {
         limit = 5000;

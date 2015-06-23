@@ -11,9 +11,12 @@
         <link rel=stylesheet href=//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css>
         <script src=//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js></script>
         <script src=//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/js/foundation.min.js></script>
+        <script src=///cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/js/foundation/foundation.accordion.min.js></script>
         <script src=//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/js/vendor/modernizr.js></script>
         <script src=//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js></script>
+
         @*<script src=//cdn.jsdelivr.net/livejs/4/live.js></script>*@
+
     </head>
     <body>
 
@@ -29,12 +32,17 @@
                         <button class="button success">Sign in</button>
                         <button class="button">Register</button>
                     </div>
+                    <hr>
                 </div>
+
                 <div class="row-fluid">
                     @content
                 </div>
             </div>
 
+        <script>
+            $(document).foundation();
+        </script>
 
     </body>
 </html>
