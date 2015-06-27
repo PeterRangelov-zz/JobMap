@@ -1,0 +1,14 @@
+# Hospitals
+
+- !!models.Hospital
+    name:      hospital1
+    lat:       1
+    lon:     2
+- !!models.Hospital
+    name:      hospital2
+    lat:       1
+    lon:     2
+- !!models.Hospital
+    name:      hospital3
+    lat:       1
+    lon:     2
