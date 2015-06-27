@@ -17,6 +17,8 @@ public class User extends Model {
 
     public String lastName;
 
+    public String emailAddress;
+
 
 
     public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
