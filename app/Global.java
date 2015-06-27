@@ -1,5 +1,6 @@
 import com.avaje.ebean.Ebean;
 import models.Hospital;
+import models.User;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -17,6 +18,10 @@ public class Global extends GlobalSettings {
 
         if (Hospital.find.findRowCount() == 0) {
             Ebean.save((List<Hospital>) Yaml.load("fixtures/test-data.yml"));
+        }
+
+        if (User.find.findRowCount() ==0) {
+
         }
 
     }
