@@ -14,6 +14,7 @@ create table hospital (
 create table user (
   id                        bigint auto_increment not null,
   first_name                varchar(255),
+  last_name                 varchar(255),
   constraint pk_user primary key (id))
 ;
 
