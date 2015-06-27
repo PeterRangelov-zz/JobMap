@@ -11,6 +11,12 @@ create table hospital (
   constraint pk_hospital primary key (id))
 ;
 
+create table user (
+  id                        bigint auto_increment not null,
+  first_name                varchar(255),
+  constraint pk_user primary key (id))
+;
+
 
 
 
@@ -19,6 +25,8 @@ create table hospital (
 SET FOREIGN_KEY_CHECKS=0;
 
 drop table hospital;
+
+drop table user;
 
 SET FOREIGN_KEY_CHECKS=1;
 
