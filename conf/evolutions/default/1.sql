@@ -16,6 +16,7 @@ create table user (
   first_name                varchar(255),
   last_name                 varchar(255),
   email_address             varchar(255),
+  password                  varchar(255),
   constraint pk_user primary key (id))
 ;
 
