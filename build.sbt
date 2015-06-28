@@ -12,7 +12,8 @@ libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.35"
 
 libraryDependencies += "org.projectlombok" % "lombok" % "1.16.4"
 
-
-
+libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
+
+testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v")
