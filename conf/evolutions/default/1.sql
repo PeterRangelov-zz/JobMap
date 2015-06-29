@@ -4,7 +4,7 @@
 # --- !Ups
 
 create table hospital (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   name                      varchar(255),
   lat                       float,
   lon                       float,
@@ -12,7 +12,7 @@ create table hospital (
 ;
 
 create table user (
-  id                        bigint auto_increment not null,
+  id                        bigint not null,
   first_name                varchar(255),
   last_name                 varchar(255),
   email_address             varchar(255),
@@ -20,16 +20,24 @@ create table user (
   constraint pk_user primary key (id))
 ;
 
+create sequence hospital_seq;
+
+create sequence user_seq;
+
 
 
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
+SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table hospital;
+drop table if exists hospital;
 
-drop table user;
+drop table if exists user;
 
-SET FOREIGN_KEY_CHECKS=1;
+SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists hospital_seq;
+
+drop sequence if exists user_seq;
 
