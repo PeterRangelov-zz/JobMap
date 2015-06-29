@@ -14,7 +14,6 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application app) {
         Logger.info("APPLICATION HAS STARTED");
-        Logger.info("DB URL -> "+Play.application().configuration().getString("DB_URL"));
 
         if (Hospital.find.findRowCount() == 0) {
             Ebean.save((List<Hospital>) Yaml.load("fixtures/test-data.yml"));
