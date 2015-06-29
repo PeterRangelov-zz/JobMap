@@ -1,2 +1,6 @@
 language: scala
 script: sbt test
+notifications:
+  email:
+    on_success: never
+    on_failure: change
