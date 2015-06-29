@@ -2,5 +2,9 @@ language: scala
 script: sbt test
 notifications:
   email:
-    on_success: never
-    on_failure: change
+    on_success: always
+    on_failure: always
+deploy:
+  provider: heroku
+  api_key: ${heroku_api_key}
+  app: jobmap-sandbox
