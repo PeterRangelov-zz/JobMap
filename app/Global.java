@@ -14,8 +14,10 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application app) {
         Logger.info("----------------------------------------------------------------------------------------------------");
-        Logger.info(System.getenv("MAILCHIMP_API_KEY"));
-        Logger.info(System.getenv("MAILCHIMP_LIST_ID"));
+        Logger.info("Mailchimp API Key: \t " + System.getenv("MAILCHIMP_API_KEY"));
+        Logger.info("Mailchimp List ID: \t " + System.getenv("MAILCHIMP_LIST_ID"));
+        Logger.info("DB URL: \t " + System.getProperty("DB_URL"));
+
         Logger.info("----------------------------------------------------------------------------------------------------");
 
         if (Hospital.find.findRowCount() == 0) {
