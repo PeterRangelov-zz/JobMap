@@ -11,8 +11,7 @@
         <script src=//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js></script>
         <script src=//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/vendor/modernizr.js></script>
 
-
-        <script src=//cdn.jsdelivr.net/livejs/4/live.js></script>
+        @*<script src=//cdn.jsdelivr.net/livejs/4/live.js></script>*@
 
     </head>
     <body>
@@ -22,6 +21,7 @@
             <div class="small-12 medium-11 large-8 medium-centered columns">
                 <h1>Join the JobMap Waiting List</h1>
                 <img src="https://gallery.mailchimp.com/00a7edd80e4ad36c64adec2f8/images/67353bba-3e7f-4a96-be87-a4cf1a9790d9.png">
+                <br><br>
                 <form method="post" action="@routes.Application.signUp()" id="form" data-abide>
                     <div>
                         <label>First name <small>required</small>
@@ -39,14 +39,12 @@
                         <label>Email address <small>required</small>
                             <input type="email" name="emailAddress" id="emailAddress" placeholder="Email" required/>
                         </label>
-                        <small class="error">Please enter valid email address.</small>
+                        <small class="error">Please enter a valid email address.</small>
                     </div>
                     <button type="submit" id="submit">Subscribe to list</button>
                 </form>
 
-
             </div>
-
         </div>
 </div>
 

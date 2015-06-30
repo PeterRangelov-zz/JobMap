@@ -28,18 +28,9 @@ public class Application extends Controller {
     public static Result earlyBird() { return ok(views.html.early_bird.render()); }
 
     public static Result signUp() throws MailChimpException, IOException{
-        Logger.info("Signing up ...");
-        String emailAddress = "peter.rangelov11@gmail.com";
-        String firstName = "Peter";
-        String lastName = "Rangelov";
-
         Form<EarlyAccessRegistration> boundForm = myForm.bindFromRequest();
-
         EarlyAccessRegistration info = boundForm.get();
-
         Mailchimp.subscribe(info.firstName, info.lastName, info.emailAddress);
-
-
         return redirect("/thanks");
     }
 
