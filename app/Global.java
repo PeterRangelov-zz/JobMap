@@ -14,6 +14,7 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application app) {
         Logger.info("APPLICATION HAS STARTED");
+        Logger.info(System.getProperties().getProperty("API_KEY_MAILCHIMP"));
 
         if (Hospital.find.findRowCount() == 0) {
             Ebean.save((List<Hospital>) Yaml.load("fixtures/test-data.yml"));

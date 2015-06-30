@@ -1,11 +1,17 @@
 package controllers;
 
+import com.ecwid.mailchimp.MailChimpException;
 import play.*;
+import play.data.Form;
 import play.mvc.*;
 
+import util.Mailchimp;
+import util.Mailchimp.EarlyAccessRegistration;
 import views.html.*;
+import java.io.IOException;
 
 public class Application extends Controller {
+    public static final Form<EarlyAccessRegistration> myForm = Form.form(EarlyAccessRegistration.class);
 
     public static Result index() {
         return ok(index.render());
@@ -18,5 +24,32 @@ public class Application extends Controller {
     public static Result sqlMap() {
         return ok(views.html.sql.sql_map.render());
     }
+
+    public static Result earlyBird() { return ok(views.html.early_bird.render()); }
+
+    public static Result signUp() throws MailChimpException, IOException{
+        Logger.info("Signing up ...");
+        String emailAddress = "peter.rangelov11@gmail.com";
+        String firstName = "Peter";
+        String lastName = "Rangelov";
+
+        Form<EarlyAccessRegistration> boundForm = myForm.bindFromRequest();
+
+        EarlyAccessRegistration info = boundForm.get();
+
+        Mailchimp.subscribe(info.firstName, info.lastName, info.emailAddress);
+
+
+        return redirect("/thanks");
+    }
+
+    public static Result thanks() {
+        return ok(views.html.thanks.render());
+    }
+
+
+
+
+
 
 }

@@ -3,12 +3,17 @@
 # ~~~~
 
 # Home page
-GET        /                    controllers.Application.map
-GET        /test                controllers.Application.index()
-GET        /sql                 controllers.Application.sqlMap()
+GET         /                    controllers.Application.map
+GET         /test                controllers.Application.index()
+GET         /sql                 controllers.Application.sqlMap()
+GET         /earlybird           controllers.Application.earlyBird()
+POST        /signup              controllers.Application.signUp()
+GET         /thanks              controllers.Application.thanks()
+
+
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file        controllers.Assets.at(path="/public", file)
+GET         /assets/*file        controllers.Assets.at(path="/public", file)
 
 
