@@ -21,8 +21,8 @@ public class Mailchimp {
 
 
         SubscribeMethod subscribeMethod = new SubscribeMethod();
-        subscribeMethod.apikey = System.getProperties().getProperty("MAILCHIMP_API_KEY");
-        subscribeMethod.id = System.getProperties().getProperty("MAILCHIMP_LIST_ID");
+        subscribeMethod.apikey = System.getenv("MAILCHIMP_API_KEY");
+        subscribeMethod.id = System.getenv("MAILCHIMP_LIST_ID");
         subscribeMethod.email = new Email();
         subscribeMethod.email.email = emailAddress;
         subscribeMethod.double_optin = false;
