@@ -18,8 +18,6 @@ public class Mailchimp {
         MailChimpClient mailChimpClient = new MailChimpClient();
         Logger.info("Subscribing...");
 
-
-
         SubscribeMethod subscribeMethod = new SubscribeMethod();
         subscribeMethod.apikey = System.getenv("MAILCHIMP_API_KEY");
         subscribeMethod.id = System.getenv("MAILCHIMP_LIST_ID");
@@ -36,8 +34,7 @@ public class Mailchimp {
         @MailChimpObject.Field
         public String EMAIL, FNAME, LNAME;
 
-        public MergeVars() {
-        }
+        public MergeVars() {}
 
         public MergeVars(String email, String fname, String lname) {
             this.EMAIL = email;
