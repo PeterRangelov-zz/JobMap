@@ -17,7 +17,7 @@
     </head>
     <body>
     <div class="container">
-        <br><br>
+        <br>
         <div class="row">
             <div class="small-12 medium-11 large-8 medium-centered columns">
                 <h1>Join the JobMap Waiting List</h1>
@@ -53,6 +53,14 @@
 
         <script>
             $(document).foundation()
+
+            $("#submit").click(function(){
+                $("#form").on('valid.fndtn.abide', function () {
+                    $("#submit").prop("disabled",true);
+                    $("#submit").html("<i class='fa fa-circle-o-notch fa-spin'></i>  Subscribing");
+                });
+            });
+
         </script>
 
 </body>
