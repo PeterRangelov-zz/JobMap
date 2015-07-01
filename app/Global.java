@@ -17,8 +17,8 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application app) {
         Logger.info("----------------------------------------------------------------------------------------------------");
-        Logger.info("Mailchimp API Key: \t " + Env.get("MAILCHIMP_API_KEY"));
-        Logger.info("Mailchimp List ID: \t " + Env.get("MAILCHIMP_LIST_ID"));
+        Logger.info("Mailchimp API Key: \t " + Env.get("mailchimp.apikey"));
+        Logger.info("Mailchimp List ID: \t " + Env.get("mailchimp.listid"));
         Logger.info("----------------------------------------------------------------------------------------------------");
 
 
