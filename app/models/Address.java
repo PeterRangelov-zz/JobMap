@@ -25,7 +25,6 @@ public class Address extends Model {
     @Column(length = 5) @NotNull @Constraints.Required
     public String zipcode;
 
-
     public float lat, lon;
 
     public static Finder<Long, Address> find = new Finder<Long, Address>(Long.class, Address.class);

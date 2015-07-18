@@ -26,6 +26,7 @@ public class Env {
         DB_EVOLUTIONS_PLUGIN("applyEvolutions.default"),
         ENABLE_EVOLUTIONS("applyEvolutions.default"),
         DB_APPLY_EVOLUTIONS("applyEvolutions.default"),
+        EVOLUTION_PLUGIN("evolutionplugin"),
         DB_URL("db.default.url"),
 //        DB_NAME(),
         DB_PASSWORD("db.default.password"),
@@ -34,7 +35,7 @@ public class Env {
 
         private String confName;
 
-         Variable (String confName) { this.confName=confName; }
+        Variable (String confName) { this.confName=confName; }
 
         public String getConfName() { return confName; }
     }
