@@ -19,8 +19,8 @@ public class Mailchimp {
         Logger.info("Subscribing...");
 
         SubscribeMethod subscribeMethod = new SubscribeMethod();
-        subscribeMethod.apikey = Env.get(Env.MAILCHIMP_API_KEY);
-        subscribeMethod.id = Env.get(Env.MAILCHIMP_LIST_ID);
+        subscribeMethod.apikey = Env.get(Env.Variable.MAILCHIMP_API_KEY);
+        subscribeMethod.id = Env.get(Env.Variable.MAILCHIMP_LIST_ID);
         subscribeMethod.email = new Email();
         subscribeMethod.email.email = emailAddress;
         subscribeMethod.double_optin = false;
