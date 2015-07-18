@@ -6,20 +6,19 @@ import util.Env.Variable;
 
 public class Env {
     public static String get (Variable key) {
-        return Play.application().configuration().getString(key.getConfName());
+        return Play.application().configuration().getString(key.confName);
     }
 
     public static void printEnvironmentVariables () {
         Logger.info("------------------------------------------------------------------");
         Logger.info("ENVIRONMENT VARIABLES FOLLOW:");
         for (Variable variable : Variable.values()) {
-            Logger.info(String.format("%-30s %-30s %s", variable, variable.confName, Env.get(variable)));
+            Logger.info(String.format("%-23s %-25s %s", variable, variable.confName, Env.get(variable)));
         }
         Logger.info("------------------------------------------------------------------");
     }
 
     public enum Variable {
-
         ENVIRONMENT("environment"),
         MAILCHIMP_API_KEY("mailchimp.apikey"),
         MAILCHIMP_LIST_ID("mailchimp.listid"),

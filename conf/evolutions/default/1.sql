@@ -34,6 +34,11 @@ create table application_entry (
 create table er_group (
   id                        bigint auto_increment not null,
   group_name                varchar(50) not null,
+  D                         tinyint(1) default 0,
+  L                         tinyint(1) default 0,
+  R                         tinyint(1) default 0,
+  N                         tinyint(1) default 0,
+  P                         tinyint(1) default 0,
   constraint pk_er_group primary key (id))
 ;
 
@@ -47,6 +52,12 @@ create table site (
   id                        bigint auto_increment not null,
   site_name                 varchar(50),
   kind                      varchar(1),
+  C                         tinyint(1) default 0,
+  A                         tinyint(1) default 0,
+  T                         tinyint(1) default 0,
+  I                         tinyint(1) default 0,
+  S                         tinyint(1) default 0,
+  R                         tinyint(1) default 0,
   street                    varchar(50) not null,
   suite                     varchar(10),
   city                      varchar(25),
@@ -57,7 +68,7 @@ create table site (
   group_id                  bigint,
   has_group                 tinyint(1) default 0,
   volume                    integer(6),
-  constraint ck_site_kind check (kind in ('U','H')),
+  constraint ck_site_kind check (kind in ('U','H','F')),
   constraint ck_site_state check (state in ('AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY')),
   constraint pk_site primary key (id))
 ;

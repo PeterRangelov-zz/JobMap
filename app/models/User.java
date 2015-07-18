@@ -48,14 +48,9 @@ public class User extends Model {
     }
 
     public enum Role {
-        @EnumValue("R")
-        RECRUITER,
-
-        @EnumValue("A")
-        APPLICANT,
-
-        @EnumValue("X")
-        ADMIN
+        @EnumValue("R") RECRUITER,
+        @EnumValue("A") APPLICANT,
+        @EnumValue("X") ADMIN
     }
 }
 
