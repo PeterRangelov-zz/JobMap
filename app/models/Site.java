@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.annotation.EnumMapping;
+import com.avaje.ebean.annotation.EnumValue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,14 +44,32 @@ public class Site extends Model {
 
     public static Finder<Long, Site> find = new Finder<Long, Site>(Long.class, Site.class);
 
-    @EnumMapping(nameValuePairs = "HOSPITAL=H, UCC=U")
     public enum SiteKind {
-        HOSPITAL, UCC
+        @EnumValue("H")
+        HOSPITAL,
+
+        @EnumValue("U")
+        UCC
     }
 
-    @EnumMapping(nameValuePairs = "COMMUNITY=C, ACADEMIC=A, TRAUMA=T, INNERCITY=I, SUBURBAN=S, RURAL=R")
     public enum SiteType {
-        COMMUNITY, ACADEMIC, TRAUMA, INNERCITY, SUBURBAN, RURAL
+        @EnumValue("C")
+        COMMUNITY,
+
+        @EnumValue("A")
+        ACADEMIC,
+
+        @EnumValue("T")
+        TRAUMA,
+
+        @EnumValue("I")
+        INNERCITY,
+
+        @EnumValue("S")
+        SUBURBAN,
+
+        @EnumValue("R")
+        RURAL
     }
 
 }

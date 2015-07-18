@@ -19,7 +19,7 @@ public class User extends Model {
     public String firstName;
     public String lastName;
 
-    @NotNull @Constraints.Required
+    @NotNull @Constraints.Required @Constraints.Email
     public String emailAddress;
 
     @Column(name = "pwd")
