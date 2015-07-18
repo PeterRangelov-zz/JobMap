@@ -5,7 +5,7 @@ import play.Play;
 
 public class Env {
     public static String get (Variable key) {
-        return Play.application().configuration().getString(key.toString());
+        return Play.application().configuration().getString(key.getConfName());
     }
 
     public static void printEnvironmentVariables () {
@@ -18,6 +18,25 @@ public class Env {
     }
 
     public enum Variable {
-        ENVIRONMENT, MAILCHIMP_API_KEY, MAILCHIMP_LIST_ID, DB_EVOLUTIONS_PLUGIN, ENABLE_EVOLUTIONS, DB_APPLY_EVOLUTIONS_DEFAULT, DB_URL, DB_NAME, DB_PASSWORD, STRIPE_API_KEY
+
+        ENVIRONMENT("environment"),
+        MAILCHIMP_API_KEY("mailchimp.apikey"),
+        MAILCHIMP_LIST_ID("mailchimp.listid"),
+        DB_EVOLUTIONS_PLUGIN("applyEvolutions.default"),
+        ENABLE_EVOLUTIONS("applyEvolutions.default"),
+        DB_APPLY_EVOLUTIONS_DEFAULT("applyEvolutions.default"),
+        DB_URL("db.default.url"),
+//        DB_NAME(),
+        DB_PASSWORD("db.default.password"),
+        STRIPE_API_KEY("");
+
+
+        private String confName;
+
+         Variable (String confName) {
+            this.confName=confName;
+        }
+
+        public String getConfName() { return confName; }
     }
 }
