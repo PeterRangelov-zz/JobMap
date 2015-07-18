@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.annotation.EnumValue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,7 +48,14 @@ public class User extends Model {
     }
 
     public enum Role {
-        RECRUITER, APPLICANT
+        @EnumValue("R")
+        RECRUITER,
+
+        @EnumValue("A")
+        APPLICANT,
+
+        @EnumValue("X")
+        ADMIN
     }
 }
 

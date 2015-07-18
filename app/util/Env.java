@@ -25,7 +25,7 @@ public class Env {
         MAILCHIMP_LIST_ID("mailchimp.listid"),
         DB_EVOLUTIONS_PLUGIN("applyEvolutions.default"),
         ENABLE_EVOLUTIONS("applyEvolutions.default"),
-        DB_APPLY_EVOLUTIONS_DEFAULT("applyEvolutions.default"),
+        DB_APPLY_EVOLUTIONS("applyEvolutions.default"),
         DB_URL("db.default.url"),
 //        DB_NAME(),
         DB_PASSWORD("db.default.password"),
