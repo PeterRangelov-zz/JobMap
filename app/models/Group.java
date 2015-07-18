@@ -28,4 +28,8 @@ public class Group extends Model {
 
 
     public static Finder<Long, Group> find = new Finder<Long, Group>(Long.class, Group.class);
+
+    public enum Type {
+        DEMOCRATIC, LOCAL, REGIONAL, NATIONAL
+    }
 }
