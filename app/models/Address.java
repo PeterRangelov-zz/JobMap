@@ -19,7 +19,7 @@ public class Address extends Model {
     @Column(length = 10)
     public String suite;
 
-    @Column(length = 25)
+    @Column(length = 25) @NotNull @Constraints.Required
     public String city;
 
     @Enumerated(value= EnumType.STRING) @NotNull @Constraints.Required
