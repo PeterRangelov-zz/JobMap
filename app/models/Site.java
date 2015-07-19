@@ -25,6 +25,9 @@ public class Site extends Model {
     @Enumerated(value= EnumType.STRING)
     public Kind kind;
 
+    @Enumerated(value= EnumType.STRING)
+    public Territory territory;
+
     @Column(name="C")
     public boolean isCommunity;
 
@@ -33,15 +36,6 @@ public class Site extends Model {
 
     @Column(name="T")
     public boolean isTrauma;
-
-    @Column(name="I")
-    public boolean isInnerCity;
-
-    @Column(name="S")
-    public boolean isSuburban;
-
-    @Column(name="R")
-    public boolean isRural;
 
     @Embedded
     public Address address;
@@ -72,6 +66,13 @@ public class Site extends Model {
         @EnumValue("I") INNER_CITY,
         @EnumValue("S") SUBURBAN,
         @EnumValue("R") RURAL
+    }
+
+    public enum Territory {
+        @EnumValue("I") INNER_CITY,
+        @EnumValue("S") SUBURBAN,
+        @EnumValue("R") RURAL,
+        @EnumValue("D") DOWNTOWN
     }
 
 }

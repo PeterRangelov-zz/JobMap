@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import util.Env;
+import util.Env.Variable;
 import models.Address.State;
 import models.Site.Kind;
 
@@ -18,39 +19,43 @@ public class Global extends GlobalSettings {
     public void onStart(Application app) {
         Env.printEnvironmentVariables();
 
-        Applicant me = new Applicant();
-        CV mine = new CV();
-        mine.firstName="peter";
-        mine.lastName="rangelov";
-        mine.email="dfs";
-        mine.medSchool="JHU";
-        mine.medSchoolGraduation=new Date();
-        mine.residencyProgram="JHU";
-        mine.residencyGraduation=new Date();
-        mine.state= Address.State.AK;
+        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
+            Ebean.save((List<Site>) Yaml.load("fixtures/sites.yml"));
+        }
 
-        me.cv = mine;
 
-        me.save();
-
-        List<Applicant> applicants = Ebean.find(Applicant.class).findList();
 
 
         // ----------------------------
-        Address a = new Address("Street", "123", "Baltimore", State.MD, "21212", 123, 123);
-        Site site = new Site();
-        site.address=a;
-        site.kind= Kind.FREESTANDING;
-
-        Group g1 = new Group();
-        g1.name="Group";
-        g1.isDemocratic=true;
-        g1.isPartnershipOpportunity=true;
-
-
-        site.group= g1;
-
-        Ebean.save(site);
+//        Applicant me = new Applicant();
+//        CV mine = new CV();
+//        mine.firstName="peter";
+//        mine.lastName="rangelov";
+//        mine.email="dfs";
+//        mine.medSchool="JHU";
+//        mine.medSchoolGraduation=new Date();
+//        mine.residencyProgram="JHU";
+//        mine.residencyGraduation=new Date();
+//        mine.state= Address.State.AK;
+//
+//        me.cv = mine;
+//
+//        me.save();
+//
+//        Address a = new Address("Street", "123", "Baltimore", State.MD, "21212", 123, 123);
+//        Site site = new Site();
+//        site.address=a;
+//        site.kind= Kind.FREESTANDING;
+//
+//        Group g1 = new Group();
+//        g1.name="Group";
+//        g1.isDemocratic=true;
+//        g1.isPartnershipOpportunity=true;
+//
+//
+//        site.group= g1;
+//
+//        Ebean.save(site);
 
 
 
