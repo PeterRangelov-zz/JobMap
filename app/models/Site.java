@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.annotation.EnumMapping;
+import com.avaje.ebean.annotation.EnumValue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,18 +22,34 @@ public class Site extends Model {
     @Constraints.Required @Column(name = "site_name", length = 50)
     public String name;
 
-    @Constraints.Required @Enumerated(value= EnumType.STRING)
-    public SiteKind kind;
+    @Enumerated(value= EnumType.STRING)
+    public Kind kind;
 
-    public Set<SiteType> types = new HashSet<SiteType>(6);
+    @Column(name="C")
+    public boolean isCommunity;
+
+    @Column(name="A")
+    public boolean isAcademic;
+
+    @Column(name="T")
+    public boolean isTrauma;
+
+    @Column(name="I")
+    public boolean isInnerCity;
+
+    @Column(name="S")
+    public boolean isSuburban;
+
+    @Column(name="R")
+    public boolean isRural;
 
     @Embedded
     public Address address;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     public Group group;
 
-    @ManyToMany(mappedBy = "sites")
+    @ManyToMany(mappedBy = "sites", cascade=CascadeType.ALL)
     public List<Recruiter> recruiters = new ArrayList<Recruiter>();
 
     public boolean hasGroup;
@@ -40,17 +57,21 @@ public class Site extends Model {
     @Column(length = 6) @Constraints.Min(0) @Constraints.Max(900000) @Max(900000) @Min(0)
     public int volume;
 
-
     public static Finder<Long, Site> find = new Finder<Long, Site>(Long.class, Site.class);
 
-    @EnumMapping(nameValuePairs = "HOSPITAL=H, UCC=U")
-    public enum SiteKind {
-        HOSPITAL, UCC
+    public enum Kind {
+        @EnumValue("H") HOSPITAL,
+        @EnumValue("U") UCC,
+        @EnumValue("F") FREESTANDING
     }
 
-    @EnumMapping(nameValuePairs = "COMMUNITY=C, ACADEMIC=A, TRAUMA=T, INNERCITY=I, SUBURBAN=S, RURAL=R")
-    public enum SiteType {
-        COMMUNITY, ACADEMIC, TRAUMA, INNERCITY, SUBURBAN, RURAL
+    public enum Type {
+        @EnumValue("C") COMMUNITY,
+        @EnumValue("A") ACADEMIC,
+        @EnumValue("T") TRAUMA,
+        @EnumValue("I") INNER_CITY,
+        @EnumValue("S") SUBURBAN,
+        @EnumValue("R") RURAL
     }
 
 }

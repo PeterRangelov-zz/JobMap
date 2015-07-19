@@ -12,6 +12,7 @@ create table applicant (
   email                     varchar(50) not null,
   phone                     varchar(12),
   street                    varchar(50),
+  city                      varchar(25),
   state                     varchar(2),
   zipcode                   varchar(5),
   residency_program         varchar(50) not null,
@@ -33,6 +34,11 @@ create table application_entry (
 create table er_group (
   id                        bigint auto_increment not null,
   group_name                varchar(50) not null,
+  D                         tinyint(1) default 0,
+  L                         tinyint(1) default 0,
+  R                         tinyint(1) default 0,
+  N                         tinyint(1) default 0,
+  P                         tinyint(1) default 0,
   constraint pk_er_group primary key (id))
 ;
 
@@ -46,8 +52,15 @@ create table site (
   id                        bigint auto_increment not null,
   site_name                 varchar(50),
   kind                      varchar(1),
+  C                         tinyint(1) default 0,
+  A                         tinyint(1) default 0,
+  T                         tinyint(1) default 0,
+  I                         tinyint(1) default 0,
+  S                         tinyint(1) default 0,
+  R                         tinyint(1) default 0,
   street                    varchar(50) not null,
   suite                     varchar(10),
+  city                      varchar(25),
   state                     varchar(2) not null,
   zipcode                   varchar(5) not null,
   lat                       float,
@@ -55,7 +68,7 @@ create table site (
   group_id                  bigint,
   has_group                 tinyint(1) default 0,
   volume                    integer(6),
-  constraint ck_site_kind check (kind in ('U','H')),
+  constraint ck_site_kind check (kind in ('U','H','F')),
   constraint ck_site_state check (state in ('AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY')),
   constraint pk_site primary key (id))
 ;
@@ -66,12 +79,12 @@ create table user (
   last_name                 varchar(255),
   email_address             varchar(255) not null,
   pwd                       varchar(255),
-  role                      varchar(9),
+  role                      varchar(1),
   applicant_id              bigint,
   recruiter_id              bigint,
   plan                      varchar(5),
   stripe_token              varchar(100),
-  constraint ck_user_role check (role in ('RECRUITER','APPLICANT')),
+  constraint ck_user_role check (role in ('R','A','X')),
   constraint ck_user_plan check (plan in ('PLAN1','PLAN2','PLAN3')),
   constraint pk_user primary key (id))
 ;

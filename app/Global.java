@@ -1,8 +1,5 @@
 import com.avaje.ebean.Ebean;
-import models.Address;
-import models.Applicant;
-import models.CV;
-import models.User;
+import models.*;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -11,8 +8,9 @@ import play.libs.Yaml;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import play.Configuration;
 import util.Env;
+import models.Address.State;
+import models.Site.Kind;
 
 public class Global extends GlobalSettings {
 
@@ -37,7 +35,25 @@ public class Global extends GlobalSettings {
 
         List<Applicant> applicants = Ebean.find(Applicant.class).findList();
 
-        Logger.info(applicants.get(0).toString());
+
+        // ----------------------------
+        Address a = new Address("Street", "123", "Baltimore", State.MD, "21212", 123, 123);
+        Site site = new Site();
+        site.address=a;
+        site.kind= Kind.FREESTANDING;
+
+        Group g1 = new Group();
+        g1.name="Group";
+        g1.isDemocratic=true;
+        g1.isPartnershipOpportunity=true;
+
+
+        site.group= g1;
+
+        Ebean.save(site);
+
+
+
 
 //        if (Hospital.find.findRowCount() == 0) {
 //            Ebean.save((List<Hospital>) Yaml.load("fixtures/test-data.yml"));

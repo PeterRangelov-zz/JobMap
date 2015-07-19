@@ -19,7 +19,7 @@ public class User extends Model {
     public String firstName;
     public String lastName;
 
-    @NotNull @Constraints.Required
+    @NotNull @Constraints.Required @Constraints.Email
     public String emailAddress;
 
     @Column(name = "pwd")
@@ -48,14 +48,9 @@ public class User extends Model {
     }
 
     public enum Role {
-        @EnumValue("R")
-        RECRUITER,
-
-        @EnumValue("A")
-        APPLICANT,
-
-        @EnumValue("X")
-        ADMIN
+        @EnumValue("R") RECRUITER,
+        @EnumValue("A") APPLICANT,
+        @EnumValue("X") ADMIN
     }
 }
 

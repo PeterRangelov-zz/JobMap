@@ -12,6 +12,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import models.Address.State;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,10 +40,13 @@ public class CV extends Model {
     @Column(length = 50)
     public String street;
 
-    @Enumerated(value= EnumType.STRING)
-    public Address.State state;
+    @Column(length = 25)
+    public String city;
 
-    @Column(length = 5)
+    @Enumerated(value= EnumType.STRING)
+    public State state;
+
+    @Column(length = 5) @Constraints.Pattern(value = "^\\d{5}$")
     public String zipcode;
 
     @Column(length = 50) @NotNull @Constraints.Required

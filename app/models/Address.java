@@ -19,10 +19,13 @@ public class Address extends Model {
     @Column(length = 10)
     public String suite;
 
+    @Column(length = 25)
+    public String city;
+
     @Enumerated(value= EnumType.STRING) @NotNull @Constraints.Required
     public State state;
 
-    @Column(length = 5) @NotNull @Constraints.Required
+    @Column(length = 5) @NotNull @Constraints.Required @Constraints.Pattern(value = "^\\d{5}$") @Constraints.MaxLength(5) @Constraints.MinLength(5)
     public String zipcode;
 
     public float lat, lon;

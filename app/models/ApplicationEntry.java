@@ -22,7 +22,7 @@ public class ApplicationEntry extends Model {
     public Applicant applicant;
 
     @Constraints.Required @Formats.DateTime(pattern="dd/MM/yyyy") @Column(name = "submitted")
-    public Date date = new Date();
+    public Date date;
 
     @Constraints.Required
     public Site site;
