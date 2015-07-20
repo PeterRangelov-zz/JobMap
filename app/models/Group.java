@@ -43,10 +43,10 @@ public class Group extends Model {
 
 
     @ManyToMany(mappedBy = "groups", cascade=CascadeType.ALL)
-    public List<Recruiter> recruiters = new ArrayList<Recruiter>();
+    public List<Recruiter> recruiters = new ArrayList<>();
 
     @OneToMany(mappedBy = "group", cascade=CascadeType.ALL)
-    public List<Site> sites = new ArrayList<Site>();
+    public List<Site> sites = new ArrayList<>();
 
 
     public static Finder<Long, Group> find = new Finder<Long, Group>(Long.class, Group.class);

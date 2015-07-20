@@ -21,10 +21,10 @@ public class Recruiter extends Model {
     public User user;
 
     @ManyToMany(cascade=CascadeType.ALL)
-    public List<Site> sites = new ArrayList<Site>();
+    public List<Site> sites = new ArrayList<>();
 
     @ManyToMany(cascade=CascadeType.ALL)
-    public List<Group> groups = new ArrayList<Group>();
+    public List<Group> groups = new ArrayList<>();
 
     public String emailForCVs;
     

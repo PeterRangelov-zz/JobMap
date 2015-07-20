@@ -44,14 +44,14 @@ public class Site extends Model {
     public Group group;
 
     @ManyToMany(mappedBy = "sites", cascade=CascadeType.ALL)
-    public List<Recruiter> recruiters = new ArrayList<Recruiter>();
+    public List<Recruiter> recruiters = new ArrayList<>();
 
     public boolean hasGroup;
 
     @Column(length = 6) @Constraints.Min(0) @Constraints.Max(900000) @Max(900000) @Min(0)
     public int volume;
 
-    public static Finder<Long, Site> find = new Finder<Long, Site>(Long.class, Site.class);
+    public static Finder<Long, Site> find = new Finder<>(Long.class, Site.class);
 
     public enum Kind {
         @EnumValue("H") HOSPITAL,

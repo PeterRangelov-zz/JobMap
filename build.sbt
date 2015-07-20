@@ -16,7 +16,7 @@ libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"
 
 libraryDependencies += "com.ecwid" % "ecwid-mailchimp" % "2.0.1.0"
 
-libraryDependencies += "com.darwinsys" % "hirondelle-date4j" % "1.5.1"
+libraryDependencies += "commons-io" % "commons-io" % "2.4"
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
 

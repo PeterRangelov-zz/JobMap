@@ -1,78 +1,69 @@
 import com.avaje.ebean.Ebean;
 import models.*;
+import org.apache.commons.lang3.StringUtils;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import play.Play;
 import play.libs.Yaml;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
+
+import java.io.*;
+import java.util.*;
+
 import util.Env;
 import util.Env.Variable;
 import models.Address.State;
 import models.Site.Kind;
+import org.apache.commons.io.FileUtils;
+import util.Startup;
 
 public class Global extends GlobalSettings {
 
     @Override
     public void onStart(Application app) {
         Env.printEnvironmentVariables();
+//        Startup.cleanDB();
 
         if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
-            Ebean.save((List<Site>) Yaml.load("fixtures/sites.yml"));
+
+
+
+            File mainFile = new File("conf/fixtures/main.yml");
+
+
+            try {
+                File file = new File("conf/fixtures/groups.yml");
+                FileInputStream fis = new FileInputStream(file);
+                byte[] data = new byte[(int) file.length()];
+                fis.read(data);
+                fis.close();
+                FileUtils.write(mainFile, new String(data), false);
+
+                File file2 = new File("conf/fixtures/sites.yml");
+                FileInputStream fis2 = new FileInputStream(file2);
+                byte[] data2 = new byte[(int) file2.length()];
+                fis2.read(data2);
+                fis2.close();
+                FileUtils.write(mainFile, new String(data2), true);
+
+                Map<String, List<Object>> all = (Map<String, List<Object>>) Yaml.load("fixtures/main.yml");
+                Ebean.save(all.get("sites"));
+                Ebean.save(all.get("groups"));
+
+            } catch (FileNotFoundException e) {
+                Logger.info("FILE NOT FOUND");
+            } catch (IOException e) {
+                Logger.info("IO Exception");
+            }
         }
-
-
-
-
-        // ----------------------------
-//        Applicant me = new Applicant();
-//        CV mine = new CV();
-//        mine.firstName="peter";
-//        mine.lastName="rangelov";
-//        mine.email="dfs";
-//        mine.medSchool="JHU";
-//        mine.medSchoolGraduation=new Date();
-//        mine.residencyProgram="JHU";
-//        mine.residencyGraduation=new Date();
-//        mine.state= Address.State.AK;
-//
-//        me.cv = mine;
-//
-//        me.save();
-//
-//        Address a = new Address("Street", "123", "Baltimore", State.MD, "21212", 123, 123);
-//        Site site = new Site();
-//        site.address=a;
-//        site.kind= Kind.FREESTANDING;
-//
-//        Group g1 = new Group();
-//        g1.name="Group";
-//        g1.isDemocratic=true;
-//        g1.isPartnershipOpportunity=true;
-//
-//
-//        site.group= g1;
-//
-//        Ebean.save(site);
-
-
-
-
-//        if (Hospital.find.findRowCount() == 0) {
-//            Ebean.save((List<Hospital>) Yaml.load("fixtures/test-data.yml"));
-//        }
-//
-//        if (User.find.findRowCount() ==0) {
-//
-//        }
 
     }
 
     @Override
     public void onStop(Application app) {
         Logger.info("Application shutdown...");
-    }
+        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
 
+        }
+    }
 }
