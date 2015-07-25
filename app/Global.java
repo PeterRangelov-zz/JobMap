@@ -1,5 +1,7 @@
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.text.csv.CsvReader;
 import models.ApplicationEntry;
+import models.Group;
 import models.Site;
 import models.User;
 import org.joda.time.DateTime;
@@ -10,6 +12,8 @@ import play.GlobalSettings;
 import play.Logger;
 import play.libs.Yaml;
 
+import java.io.File;
+import java.io.FileReader;
 import java.util.*;
 
 import scala.App;
@@ -24,21 +28,53 @@ public class Global extends GlobalSettings {
 
         if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
 
+            if (Site.find.findList().isEmpty()) {
+                try {
+                    File f = new File("conf/fixtures/Fixtures - Sites.csv");
+                    FileReader sitesReader = new FileReader(f);
+                    CsvReader<Site> sitesCsvReader = Ebean.createCsvReader(Site.class);
+                    sitesCsvReader.setHasHeader(true, false);
+                    sitesCsvReader.setPersistBatchSize(20);
+
+                    sitesCsvReader.addProperty("name");
+                    sitesCsvReader.addProperty("logoUrl");
+                    sitesCsvReader.addProperty("type");
+                    sitesCsvReader.addProperty("hasGroup");
+                    sitesCsvReader.addProperty("isCommunity");
+                    sitesCsvReader.addProperty("isAcademic");
+                    sitesCsvReader.addProperty("isTrauma");
+                    sitesCsvReader.addProperty("territory");
+                    sitesCsvReader.addProperty("volume");
+                    sitesCsvReader.addProperty("address.street");
+                    sitesCsvReader.addProperty("address.suite");
+                    sitesCsvReader.addProperty("address.city");
+                    sitesCsvReader.addProperty("address.state");
+                    sitesCsvReader.addProperty("address.zipcode");
+                    sitesCsvReader.addProperty("address.lat");
+                    sitesCsvReader.addProperty("address.lon");
+
+                    File groupsFile = new File("conf/fixtures/Fixtures - Groups.csv");
+                    FileReader groupsReader = new FileReader(groupsFile);
+                    CsvReader<Group> groupsCsvReader = Ebean.createCsvReader(Group.class);
+                    groupsCsvReader.setHasHeader(true, false);
+                    groupsCsvReader.setPersistBatchSize(20);
+
+                    groupsCsvReader.addProperty("name");
+                    groupsCsvReader.addProperty("logoUrl");
+                    groupsCsvReader.addProperty("type");
+                    groupsCsvReader.addProperty("isDemocratic");
+                    groupsCsvReader.addProperty("isPartnershipOpportunity");
+
+                    sitesCsvReader.process(sitesReader);
+                    groupsCsvReader.process(groupsReader);
 
 
-//            Startup.generateMainFixtureFile("groups", "sites");
-
-            if (Site.find.findList().isEmpty()){
-                Map<String, List<Object>> all = ((Map<String, List<Object>>) Yaml.load("fixtures/test/sites.yml"));
-//                Ebean.save(all.get("recruiters"));
-//            Ebean.save(all.get("users"));
-
-                Ebean.save(all.get("sites"));
-//                Ebean.save((List<Site>) Yaml.load("fixtures/test/sites.yml"));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
-
-
         }
+
 
 
 

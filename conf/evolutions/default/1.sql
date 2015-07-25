@@ -38,9 +38,6 @@ create table er_group (
   logo_url                  varchar(50),
   type                      varchar(1),
   D                         tinyint(1) default 0,
-  L                         tinyint(1) default 0,
-  R                         tinyint(1) default 0,
-  N                         tinyint(1) default 0,
   P                         tinyint(1) default 0,
   constraint ck_er_group_type check (type in ('N','L','R')),
   constraint pk_er_group primary key (id))

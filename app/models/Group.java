@@ -33,15 +33,6 @@ public class Group extends Model {
     @Column(name="D")
     public boolean isDemocratic;
 
-    @Column(name="L")
-    public boolean isLocal;
-
-    @Column(name="R")
-    public boolean isRegional;
-
-    @Column(name="N")
-    public boolean isNational;
-
     @Column(name="P")
     public boolean isPartnershipOpportunity;
 

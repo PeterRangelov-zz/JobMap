@@ -1,8 +1,0 @@
-groups:
-     - &group1 !!models.Group
-     name: EMA
-     isDemocratic: true
-     isRegional: true
-     isNational: true
-     isPartnershipOpportunity: true
-     isLocal: false
