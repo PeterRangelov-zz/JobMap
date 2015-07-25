@@ -1,5 +1,10 @@
 import com.avaje.ebean.Ebean;
+import models.ApplicationEntry;
 import models.Site;
+import models.User;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -7,6 +12,7 @@ import play.libs.Yaml;
 
 import java.util.*;
 
+import scala.App;
 import util.Env;
 import util.Env.Variable;
 
@@ -17,6 +23,7 @@ public class Global extends GlobalSettings {
         Env.printEnvironmentVariables();
 
         if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
+
 
 
 //            Startup.generateMainFixtureFile("groups", "sites");
@@ -30,10 +37,8 @@ public class Global extends GlobalSettings {
             }
 
 
-
-
-
         }
+
 
 
     }
@@ -45,3 +50,4 @@ public class Global extends GlobalSettings {
         }
     }
 }
+

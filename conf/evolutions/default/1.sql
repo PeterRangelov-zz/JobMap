@@ -28,7 +28,7 @@ create table applicant (
 create table application_entry (
   id                        bigint auto_increment not null,
   applicant_id              bigint,
-  submitted                 time,
+  submitted                 date,
   constraint pk_application_entry primary key (id))
 ;
 
@@ -85,6 +85,9 @@ create table user (
   email_address             varchar(255) not null,
   pwd                       varchar(255),
   last_login                datetime,
+  account_locked            tinyint(1) default 0,
+  validation_token          varchar(255),
+  account_validated         tinyint(1) default 0,
   role                      varchar(1),
   plan                      varchar(5),
   stripe_token              varchar(100),

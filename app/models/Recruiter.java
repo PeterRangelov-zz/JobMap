@@ -23,6 +23,8 @@ public class Recruiter extends Model {
     @ManyToMany(cascade=CascadeType.ALL)
     public List<Site> sites = new ArrayList<>();
 
+    public List<Site> groupSitesResponsibleFor = new ArrayList<>();
+
     @ManyToMany(cascade=CascadeType.ALL)
     public List<Group> groups = new ArrayList<>();
 

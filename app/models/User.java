@@ -29,6 +29,12 @@ public class User extends Model {
 
     public DateTime lastLogin;
 
+    public boolean accountLocked;
+
+    public String validationToken;
+
+    public boolean accountValidated;
+
     @Constraints.Required @Enumerated(value= EnumType.STRING)
     public Role role;
 

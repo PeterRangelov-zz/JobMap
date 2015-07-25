@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
@@ -21,13 +22,11 @@ public class ApplicationEntry extends Model {
     @ManyToOne
     public Applicant applicant;
 
-    @Constraints.Required @Formats.DateTime(pattern="dd/MM/yyyy")
-    public LocalTime submitted;
-
     @Constraints.Required
+    public LocalDate submitted;
+
     public Site site;
 
-    @Constraints.Required
     public Recruiter recruiter;
 
     public static Finder<Long, ApplicationEntry> find = new Finder<Long, ApplicationEntry>(Long.class, ApplicationEntry.class);
