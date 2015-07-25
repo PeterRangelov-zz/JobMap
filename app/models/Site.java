@@ -26,7 +26,7 @@ public class Site extends Model {
     public String logoUrl;
 
     @Enumerated(value= EnumType.STRING)
-    public Kind kind;
+    public Type type;
 
     @Enumerated(value= EnumType.STRING)
     public Territory territory;
@@ -56,13 +56,13 @@ public class Site extends Model {
 
     public static Finder<Long, Site> find = new Finder<>(Long.class, Site.class);
 
-    public enum Kind {
+    public enum Type {
         @EnumValue("H") HOSPITAL,
         @EnumValue("U") UCC,
         @EnumValue("F") FREESTANDING
     }
 
-    public enum Type {
+    public enum Kind {
         @EnumValue("C") COMMUNITY,
         @EnumValue("A") ACADEMIC,
         @EnumValue("T") TRAUMA,

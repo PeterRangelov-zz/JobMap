@@ -57,7 +57,7 @@ create table site (
   id                        bigint auto_increment not null,
   site_name                 varchar(50),
   logo_url                  varchar(50),
-  kind                      varchar(1),
+  type                      varchar(1),
   territory                 varchar(1),
   C                         tinyint(1) default 0,
   A                         tinyint(1) default 0,
@@ -72,7 +72,7 @@ create table site (
   group_id                  bigint,
   has_group                 tinyint(1) default 0,
   volume                    integer(6),
-  constraint ck_site_kind check (kind in ('U','H','F')),
+  constraint ck_site_type check (type in ('U','H','F')),
   constraint ck_site_territory check (territory in ('D','R','S','I')),
   constraint ck_site_state check (state in ('AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY')),
   constraint pk_site primary key (id))

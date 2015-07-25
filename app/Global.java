@@ -29,11 +29,12 @@ public class Global extends GlobalSettings {
 //            Startup.generateMainFixtureFile("groups", "sites");
 
             if (Site.find.findList().isEmpty()){
-                Map<String, List<Object>> all = ((Map<String, List<Object>>) Yaml.load("fixtures/test/all.yml"));
-                Ebean.save(all.get("recruiters"));
+                Map<String, List<Object>> all = ((Map<String, List<Object>>) Yaml.load("fixtures/test/sites.yml"));
+//                Ebean.save(all.get("recruiters"));
 //            Ebean.save(all.get("users"));
 
                 Ebean.save(all.get("sites"));
+//                Ebean.save((List<Site>) Yaml.load("fixtures/test/sites.yml"));
             }
 
 
@@ -50,4 +51,5 @@ public class Global extends GlobalSettings {
         }
     }
 }
+
 
