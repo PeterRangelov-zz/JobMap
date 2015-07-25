@@ -30,8 +30,8 @@ public class Global extends GlobalSettings {
 
             if (Site.find.findList().isEmpty()) {
                 try {
-                    File f = new File("conf/fixtures/Fixtures - Sites.csv");
-                    FileReader sitesReader = new FileReader(f);
+                    File sitesFile = new File("conf/fixtures/Fixtures - Sites.csv");
+                    FileReader sitesReader = new FileReader(sitesFile);
                     CsvReader<Site> sitesCsvReader = Ebean.createCsvReader(Site.class);
                     sitesCsvReader.setHasHeader(true, false);
                     sitesCsvReader.setPersistBatchSize(20);
