@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.joda.time.LocalTime;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity @Data @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper=false)
@@ -18,11 +18,11 @@ public class ApplicationEntry extends Model {
     @Id
     public Long id;
 
-    @ManyToOne (cascade=CascadeType.ALL)
+    @ManyToOne
     public Applicant applicant;
 
-    @Constraints.Required @Formats.DateTime(pattern="dd/MM/yyyy") @Column(name = "submitted")
-    public Date date;
+    @Constraints.Required @Formats.DateTime(pattern="dd/MM/yyyy")
+    public LocalTime submitted;
 
     @Constraints.Required
     public Site site;

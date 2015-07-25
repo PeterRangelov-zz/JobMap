@@ -1,6 +1,8 @@
 package util;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.Transaction;
+import com.avaje.ebean.TxRunnable;
 import com.ecwid.mailchimp.MailChimpClient;
 import com.ecwid.mailchimp.MailChimpException;
 import com.ecwid.mailchimp.MailChimpObject;
@@ -8,24 +10,57 @@ import com.ecwid.mailchimp.method.v2_0.lists.Email;
 import com.ecwid.mailchimp.method.v2_0.lists.SubscribeMethod;
 import models.Group;
 import models.Site;
+import org.apache.commons.io.FileUtils;
 import play.Logger;
+import play.libs.Yaml;
 import util.Env.Variable;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by peterrangelov on 6/30/15.
  */
 public class Startup {
+    public static void generateMainFixtureFile(String... args) {
 
-    public static void  cleanDB () {
-        Ebean.beginTransaction();
-        List<Site> sites = Ebean.find(Site.class).findList();
-        List<Group> groups = Ebean.find(Group.class).findList();
-        Ebean.delete(groups);
-        Ebean.delete(sites);
-        Ebean.endTransaction();
+        System.out.println("Thread Running");
+        try {
+            FileUtils.forceDelete(new File("conf/fixtures/all.yml"));
+            File mainFile = new File("conf/fixtures/all.yml");
+
+            for (String arg : args) {
+                Logger.info("Writing to all.yml: " + arg);
+
+                File file = new File("conf/fixtures/" + arg + ".yml");
+                FileInputStream fis = new FileInputStream(file);
+                byte[] data = new byte[(int) file.length()];
+                fis.read(data);
+                fis.close();
+                FileUtils.write(mainFile, new String(data), true);
+            }
+        } catch (FileNotFoundException e) {
+            Logger.info("FILE NOT FOUND");
+        } catch (IOException e) {
+            Logger.info("IO Exception");
+        }
+    }
+
+
+    public static void seedFixturesFromMain(String... args) {
+        Thread thread = new Thread() {
+            public void run() {
+                Map<String, List<Object>> all = (Map<String, List<Object>>) Yaml.load("fixtures/main.yml");
+
+                for (String arg : args) {
+                    Logger.info("Saving fixtures from main: " + args);
+                    Ebean.save(all.get(arg));
+                }
+            }
+
+
+        };
     }
 
 

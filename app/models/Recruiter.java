@@ -17,7 +17,7 @@ public class Recruiter extends Model {
     @Id
     public Long id;
 
-    @Constraints.Required @OneToOne(mappedBy = "recruiter", cascade= CascadeType.ALL)
+    @Constraints.Required @OneToOne(cascade=CascadeType.ALL)
     public User user;
 
     @ManyToMany(cascade=CascadeType.ALL)
@@ -28,6 +28,6 @@ public class Recruiter extends Model {
 
     public String emailForCVs;
     
-    public static Finder<Long, Recruiter> find = new Finder<Long, Recruiter>(Long.class, Recruiter.class);
+    public static Finder<Long, Recruiter> find = new Finder<>(Long.class, Recruiter.class);
 
 }

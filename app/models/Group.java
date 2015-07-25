@@ -24,7 +24,11 @@ public class Group extends Model {
     @Column(name = "group_name", length = 50) @NotNull @Constraints.Required
     public String name;
 
-    public Set<Type> typesSet = new HashSet<>(5);
+    @Constraints.Required @Column(length = 50)
+    public String logoUrl;
+
+    @Enumerated(value= EnumType.STRING)
+    public Type type;
 
     @Column(name="D")
     public boolean isDemocratic;
@@ -41,22 +45,18 @@ public class Group extends Model {
     @Column(name="P")
     public boolean isPartnershipOpportunity;
 
-
-    @ManyToMany(mappedBy = "groups", cascade=CascadeType.ALL)
+    @ManyToMany(mappedBy = "groups")
     public List<Recruiter> recruiters = new ArrayList<>();
 
-    @OneToMany(mappedBy = "group", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     public List<Site> sites = new ArrayList<>();
 
 
-    public static Finder<Long, Group> find = new Finder<Long, Group>(Long.class, Group.class);
+    public static Finder<Long, Group> find = new Finder<>(Long.class, Group.class);
 
     public enum Type {
-        @EnumValue("D") DEMOCRATIC,
         @EnumValue("L") LOCAL,
         @EnumValue("R") REGIONAL,
         @EnumValue("N") NATIONAL,
-        @EnumValue("P") PARTNERSHIP_OPPORTUNITY
-
     }
 }

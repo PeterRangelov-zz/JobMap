@@ -1,0 +1,76 @@
+users:
+- &user1 !!models.User
+     emailAddress: pr6@umbc.edu
+     role: ADMIN
+     plan: PLAN1
+recruiters:
+- &recruiter1 !!models.Recruiter
+     user: *user1
+
+groups:
+- &group1 !!models.Group
+     name: EMA
+     isDemocratic: true
+     isRegional: true
+     isNational: true
+     isPartnershipOpportunity: true
+     isLocal: false
+     recruiters:
+          - *recruiter1
+
+sites:
+- &site1 !!models.Site
+     name: hospital1
+     logoUrl: http://whatevs1
+     kind: HOSPITAL
+     hasGroup: true
+     isCommunity: false
+     isAcademic: true
+     isTrauma: false
+     territory: RURAL
+     volume: 30000
+     group: *group1
+     address:
+          street: 13 Main Street
+          suite: 150
+          city: Silver Spring
+          state: MD
+          zipcode: 21212
+          lat: 123123
+          lon: -34234234
+- &site2 !!models.Site
+     name: hospital2
+     logoUrl: http://whatevs2
+     kind: HOSPITAL
+     hasGroup: false
+     isCommunity: true
+     isAcademic: false
+     isTrauma: false
+     territory: INNER_CITY
+     volume: 20000
+     group: *group1
+     address:
+          street: Y STREET
+          suite: 51
+          city: Miami Beach
+          state: FL
+          zipcode: 45634
+          lat: -56456565
+          lon: -45345455
+- &site3 !!models.Site
+     name: hospital3
+     logoUrl: http://whatevs3
+     hasGroup: false
+     isCommunity: true
+     isAcademic: false
+     isTrauma: false
+     territory: SUBURBAN
+     volume: 12000
+     address:
+          street: Y STREET
+          suite: D
+          city: Dallas
+          state: TX
+          zipcode: 45432
+          lat: -34234324
+          lon: 3243.234

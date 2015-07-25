@@ -16,13 +16,13 @@ public class Applicant extends Model {
     @Id
     public Long id;
 
-    @OneToOne(mappedBy = "applicant")
+    @OneToOne(cascade=CascadeType.ALL)
     public User user;
 
     @Embedded
     public CV cv;
 
-    public List<ApplicationEntry> applicationHistory = new ArrayList<ApplicationEntry>();
+    public List<ApplicationEntry> applicationHistory = new ArrayList<>();
 
-    public static Finder<Long, Applicant> find = new Finder<Long, Applicant>(Long.class, Applicant.class);
+    public static Finder<Long, Applicant> find = new Finder<>(Long.class, Applicant.class);
 }

@@ -22,6 +22,9 @@ public class Site extends Model {
     @Constraints.Required @Column(name = "site_name", length = 50)
     public String name;
 
+    @Constraints.Required @Column(length = 50)
+    public String logoUrl;
+
     @Enumerated(value= EnumType.STRING)
     public Kind kind;
 
@@ -40,10 +43,10 @@ public class Site extends Model {
     @Embedded
     public Address address;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     public Group group;
 
-    @ManyToMany(mappedBy = "sites", cascade=CascadeType.ALL)
+    @ManyToMany(mappedBy = "sites", cascade = CascadeType.ALL)
     public List<Recruiter> recruiters = new ArrayList<>();
 
     public boolean hasGroup;
