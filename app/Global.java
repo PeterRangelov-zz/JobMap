@@ -26,7 +26,33 @@ public class Global extends GlobalSettings {
     public void onStart(Application app) {
 //        Env.printEnvironmentVariables();
 
-        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
+//        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
+
+            if (User.find.findList().isEmpty()) {
+                try {
+                    File file = new File("conf/fixtures/Fixtures - Users.csv");
+                    FileReader reader = new FileReader(file);
+                    CsvReader<User> csvReader = Ebean.createCsvReader(User.class);
+                    csvReader.setHasHeader(true, false);
+                    csvReader.setPersistBatchSize(20);
+
+                    csvReader.addProperty("firstName");
+                    csvReader.addProperty("lastName");
+                    csvReader.addProperty("emailAddress");
+                    csvReader.addProperty("passwordHash");
+                    csvReader.addProperty("accountLocked");
+                    csvReader.addProperty("accountValidated");
+                    csvReader.addProperty("role");
+                    csvReader.addProperty("plan");
+                    csvReader.addProperty("stripeToken");
+
+                    csvReader.process(reader);
+
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
             if (Site.find.findList().isEmpty()) {
                 try {
@@ -78,7 +104,7 @@ public class Global extends GlobalSettings {
 
 
 
-    }
+//    }
 
     @Override
     public void onStop(Application app) {

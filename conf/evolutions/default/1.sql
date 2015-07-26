@@ -80,7 +80,7 @@ create table user (
   first_name                varchar(255),
   last_name                 varchar(255),
   email_address             varchar(255) not null,
-  pwd                       varchar(255),
+  pwdHash                   varchar(255),
   last_login                datetime,
   account_locked            tinyint(1) default 0,
   validation_token          varchar(255),
@@ -89,7 +89,7 @@ create table user (
   plan                      varchar(5),
   stripe_token              varchar(100),
   constraint ck_user_role check (role in ('R','A','X')),
-  constraint ck_user_plan check (plan in ('PLAN1','PLAN2','PLAN3')),
+  constraint ck_user_plan check (plan in ('FREE','PLAN1','PLAN2','PLAN3')),
   constraint pk_user primary key (id))
 ;
 

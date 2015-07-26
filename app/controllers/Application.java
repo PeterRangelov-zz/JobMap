@@ -1,47 +1,78 @@
 package controllers;
 
 import com.ecwid.mailchimp.MailChimpException;
+import models.User;
 import play.*;
+import play.api.mvc.Flash;
 import play.data.Form;
 import play.mvc.*;
 
 import util.Mailchimp;
 import util.Mailchimp.EarlyAccessRegistration;
 import views.html.*;
+import models.User.SigninForm;
+import models.User.Role;
 
 import java.io.File;
 import java.io.IOException;
 
 public class Application extends Controller {
-    public static final Form<EarlyAccessRegistration> myForm = Form.form(EarlyAccessRegistration.class);
+    public static final Form<EarlyAccessRegistration> mailchimpForm = Form.form(EarlyAccessRegistration.class);
+    public static final Form<SigninForm> signinForm = Form.form(SigninForm.class);
 
-    public static Result index() {
-        return ok(index.render());
-    }
-
-    public static Result map() {
-        return ok(map.render());
-    }
-
-    public static Result sqlMap() {
-        return ok(views.html.sql.sql_map.render());
-    }
-
-    public static Result earlyBird() { return ok(views.html.early_bird.render()); }
 
     public static Result signUp() throws MailChimpException, IOException {
-        Form<EarlyAccessRegistration> boundForm = myForm.bindFromRequest();
+        Form<EarlyAccessRegistration> boundForm = mailchimpForm.bindFromRequest();
         EarlyAccessRegistration info = boundForm.get();
         Mailchimp.subscribe(info.firstName, info.lastName, info.emailAddress);
         return redirect("/thanks");
     }
 
-//    public static Result signIn() {
-//
-//    }
+    public static Result authenticateUser() {
+        SigninForm form = signinForm.bindFromRequest().get();
+        Logger.info(form.emailAddress);
+        Logger.info(form.password);
+        // SEARCH EBEAN FOR USER
+        try {
+            User user = User.findByEmail(form.emailAddress);
+            Logger.info(user.toString());
 
-    public static Result thanks() {
-        return ok(views.html.thanks.render());
+            if (! user.passwordHash.equalsIgnoreCase(form.password)) {
+                flash("error", "Wrong password");
+                return redirect("/signin");
+            }
+            if (user.accountLocked) {
+                flash("error", "Your account is locked");
+                return redirect("/signin");
+            }
+//
+            if (user.role.equals(Role.ADMIN)) {
+                return redirect("/admin");
+            }
+            if (user.role.equals(Role.APPLICANT)) {
+                return redirect("/applicant");
+            }
+            if (user.role.equals(Role.RECRUITER)) {
+                return redirect("/recruiter");
+            }
+
+            return redirect("/signin");
+
+
+
+        }
+        catch (NullPointerException e) {
+            flash("error", "Username or password incorrect");
+            return redirect("/signin");
+        }
+
+
+
+        // CHECK USER ROLE
+
+        // STORE USER IN SESSION
+
+
     }
 
     public static Result upload() {

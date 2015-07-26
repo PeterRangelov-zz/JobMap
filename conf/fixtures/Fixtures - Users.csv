@@ -1,0 +1,4 @@
+First name,Last name,Email,Password,Account Locked?,Account Validated?,Role,Payment plan,Stripe Token
+Peter,Rangelov,peter.rangelov11@gmail.com,123123,FALSE,TRUE,ADMIN,FREE,no
+Alex,Mohseni,alex.mohseni@gmail.com,123123,FALSE,TRUE,ADMIN,FREE,no
+Puneet,Chopra,pchopra77@gmail.com,123123,FALSE,TRUE,ADMIN,FREE,no

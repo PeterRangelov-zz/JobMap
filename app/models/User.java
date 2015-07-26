@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
+import play.data.Form;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
+import util.Mailchimp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,8 +26,8 @@ public class User extends Model {
     @NotNull @Constraints.Required @Constraints.Email
     public String emailAddress;
 
-    @Column(name = "pwd")
-    public String password;
+    @Column(name = "pwdHash")
+    public String passwordHash;
 
     public DateTime lastLogin;
 
@@ -47,7 +49,7 @@ public class User extends Model {
     public static Finder<Long, User> find = new Finder<>(Long.class, User.class);
 
     public enum Plan {
-        PLAN1, PLAN2, PLAN3
+        FREE, PLAN1, PLAN2, PLAN3
     }
 
     public enum Role {
@@ -55,6 +57,16 @@ public class User extends Model {
         @EnumValue("A") APPLICANT,
         @EnumValue("X") ADMIN
     }
+
+    public static class SigninForm {
+        public String emailAddress;
+        public String password;
+    }
+
+    public static User findByEmail (String email) {
+        return User.find.where().eq("emailAddress", email).findUnique();
+    }
+
 }
 
 
