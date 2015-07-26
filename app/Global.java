@@ -24,7 +24,7 @@ public class Global extends GlobalSettings {
 
     @Override
     public void onStart(Application app) {
-        Env.printEnvironmentVariables();
+//        Env.printEnvironmentVariables();
 
         if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
 

@@ -36,6 +36,10 @@ public class Application extends Controller {
         return redirect("/thanks");
     }
 
+//    public static Result signIn() {
+//
+//    }
+
     public static Result thanks() {
         return ok(views.html.thanks.render());
     }
