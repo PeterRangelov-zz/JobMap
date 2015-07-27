@@ -80,7 +80,7 @@ create table user (
   first_name                varchar(255),
   last_name                 varchar(255),
   email_address             varchar(255) not null,
-  pwdHash                   varchar(255),
+  pwd_hash                  varchar(255),
   last_login                datetime,
   account_locked            tinyint(1) default 0,
   validation_token          varchar(255),

@@ -1,19 +1,9 @@
-package util;
+package util.security.misc;
 
 import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Transaction;
-import com.avaje.ebean.TxRunnable;
-import com.ecwid.mailchimp.MailChimpClient;
-import com.ecwid.mailchimp.MailChimpException;
-import com.ecwid.mailchimp.MailChimpObject;
-import com.ecwid.mailchimp.method.v2_0.lists.Email;
-import com.ecwid.mailchimp.method.v2_0.lists.SubscribeMethod;
-import models.Group;
-import models.Site;
 import org.apache.commons.io.FileUtils;
 import play.Logger;
 import play.libs.Yaml;
-import util.Env.Variable;
 
 import java.io.*;
 import java.util.List;

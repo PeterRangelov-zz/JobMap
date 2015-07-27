@@ -1,8 +1,7 @@
-package util;
+package util.security.misc;
 
 import play.Logger;
 import play.Play;
-import util.Env.Variable;
 
 public class Env {
     public static String get (Variable key) {

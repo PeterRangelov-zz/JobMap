@@ -6,14 +6,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
-import play.data.Form;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
-import util.Mailchimp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.*;
 
 @Entity @Data @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode(callSuper=false)
 public class User extends Model {
@@ -26,7 +23,7 @@ public class User extends Model {
     @NotNull @Constraints.Required @Constraints.Email
     public String emailAddress;
 
-    @Column(name = "pwdHash")
+    @Column(name = "pwd_hash")
     public String passwordHash;
 
     public DateTime lastLogin;

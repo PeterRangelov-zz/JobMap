@@ -36,7 +36,7 @@ public class ApplicationTest {
 
     @Test
     public void renderTemplate() {
-        Html html = views.html.index.render();
+        Html html = views.html.public_area.index.render();
         assertThat(contentType(html)).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Search");
     }

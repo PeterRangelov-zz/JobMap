@@ -1,15 +1,15 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
 import com.ecwid.mailchimp.MailChimpException;
 import models.User;
+import org.joda.time.DateTime;
 import play.*;
-import play.api.mvc.Flash;
 import play.data.Form;
 import play.mvc.*;
 
-import util.Mailchimp;
-import util.Mailchimp.EarlyAccessRegistration;
-import views.html.*;
+import util.security.misc.Mailchimp;
+import util.security.misc.Mailchimp.EarlyAccessRegistration;
 import models.User.SigninForm;
 import models.User.Role;
 
@@ -28,11 +28,15 @@ public class Application extends Controller {
         return redirect("/thanks");
     }
 
+    public static Result signOut () {
+        session().clear();
+        return redirect("/");
+    }
+
     public static Result authenticateUser() {
         SigninForm form = signinForm.bindFromRequest().get();
-        Logger.info(form.emailAddress);
-        Logger.info(form.password);
-        // SEARCH EBEAN FOR USER
+        Logger.debug(form.emailAddress);
+        Logger.debug(form.password);
         try {
             User user = User.findByEmail(form.emailAddress);
             Logger.info(user.toString());
@@ -45,7 +49,16 @@ public class Application extends Controller {
                 flash("error", "Your account is locked");
                 return redirect("/signin");
             }
-//
+
+
+            session("role", user.role.toString());
+            session("firstName", user.firstName);
+            session("email", user.emailAddress);
+
+            user.lastLogin = new DateTime();
+            Ebean.save(user);
+
+
             if (user.role.equals(Role.ADMIN)) {
                 return redirect("/admin");
             }

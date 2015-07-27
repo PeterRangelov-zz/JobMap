@@ -1,4 +1,4 @@
-package util;
+package util.security.misc;
 
 import com.ecwid.mailchimp.MailChimpClient;
 import com.ecwid.mailchimp.MailChimpException;
@@ -6,7 +6,7 @@ import com.ecwid.mailchimp.MailChimpObject;
 import com.ecwid.mailchimp.method.v2_0.lists.Email;
 import com.ecwid.mailchimp.method.v2_0.lists.SubscribeMethod;
 import play.Logger;
-import util.Env.Variable;
+import util.security.misc.Env.Variable;
 import java.io.IOException;
 
 /**
