@@ -3,6 +3,7 @@ import com.avaje.ebean.text.csv.CsvReader;
 import models.Group;
 import models.Site;
 import models.User;
+import org.apache.commons.codec.digest.DigestUtils;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -17,8 +18,16 @@ public class Global extends GlobalSettings {
 
     @Override
     public void onStart(Application app) {
-//        Env.printEnvironmentVariables();
+        Env.printEnvironmentVariables();
+        String password = "123123";
+        String hashedPassword = String.valueOf(DigestUtils.sha512Hex(password + "publicstatic"));
 
+        Logger.debug("password: " + password);
+        Logger.debug("hashed password: " + hashedPassword);
+
+        Logger.debug(String.valueOf(hashedPassword.equals(DigestUtils.sha512Hex(password + "publicstatic"))));
+
+//        [B@523bdfc4
 //        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
 
             if (User.find.findList().isEmpty()) {
@@ -32,15 +41,15 @@ public class Global extends GlobalSettings {
                     csvReader.addProperty("firstName");
                     csvReader.addProperty("lastName");
                     csvReader.addProperty("emailAddress");
-                    csvReader.addProperty("passwordHash");
+                    csvReader.addIgnore();
                     csvReader.addProperty("accountLocked");
                     csvReader.addProperty("accountValidated");
                     csvReader.addProperty("role");
                     csvReader.addProperty("plan");
                     csvReader.addProperty("stripeToken");
+                    csvReader.addProperty("passwordHash");
 
                     csvReader.process(reader);
-
 
                 } catch (Exception e) {
                     throw new RuntimeException(e);

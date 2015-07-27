@@ -11,9 +11,7 @@ public class Administrator extends Controller {
 
     public static Result test() {
 
-
-        Logger.info("ACCESS GRANTED");
-
+        Logger.debug("ACCESS GRANTED");
 
         return ok(test.render());
 

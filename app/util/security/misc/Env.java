@@ -28,7 +28,8 @@ public class Env {
         DB_URL("db.default.url"),
 //        DB_NAME(),
         DB_PASSWORD("db.default.password"),
-        STRIPE_API_KEY("123");
+        STRIPE_API_KEY("123"),
+        PWD_SALT("pwd.salt");
 
 
         private String confName;

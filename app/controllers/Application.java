@@ -3,11 +3,13 @@ package controllers;
 import com.avaje.ebean.Ebean;
 import com.ecwid.mailchimp.MailChimpException;
 import models.User;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 import play.*;
 import play.data.Form;
 import play.mvc.*;
 
+import util.security.misc.Env;
 import util.security.misc.Mailchimp;
 import util.security.misc.Mailchimp.EarlyAccessRegistration;
 import models.User.SigninForm;
@@ -41,7 +43,7 @@ public class Application extends Controller {
             User user = User.findByEmail(form.emailAddress);
             Logger.info(user.toString());
 
-            if (! user.passwordHash.equalsIgnoreCase(form.password)) {
+            if (! user.passwordHash.equals(DigestUtils.sha512Hex(form.password + Env.get(Env.Variable.PWD_SALT)))) {
                 flash("error", "Wrong password");
                 return redirect("/signin");
             }
@@ -55,9 +57,8 @@ public class Application extends Controller {
             session("firstName", user.firstName);
             session("email", user.emailAddress);
 
-            user.lastLogin = new DateTime();
+            user.setLastLogin(new DateTime());
             Ebean.save(user);
-
 
             if (user.role.equals(Role.ADMIN)) {
                 return redirect("/admin");
