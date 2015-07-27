@@ -27,8 +27,7 @@ public class Global extends GlobalSettings {
 
         Logger.debug(String.valueOf(hashedPassword.equals(DigestUtils.sha512Hex(password + "publicstatic"))));
 
-//        [B@523bdfc4
-        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
+//        if (Env.get(Variable.ENVIRONMENT).equalss("DEV")) {
 
             if (User.find.findList().isEmpty()) {
                 try {
@@ -102,7 +101,7 @@ public class Global extends GlobalSettings {
                 }
 
             }
-        }
+//        }
 
 
 
