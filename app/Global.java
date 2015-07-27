@@ -100,6 +100,7 @@ public class Global extends GlobalSettings {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
+
             }
         }
 
