@@ -15,7 +15,6 @@ import views.html.public_area.signin;
 public class RecruiterRoleChecker extends Simple {
 
     public Promise<Result> call(Context ctx) throws Throwable {
-
         if (ctx.session().get("role").equalsIgnoreCase(User.Role.RECRUITER.toString())) {
             return delegate.call(ctx);
         } else {

@@ -14,11 +14,11 @@ public class AuthenticatorChecker extends Simple {
 
     public Promise<Result> call(Context ctx) throws Throwable {
         try {
-            Logger.info("AuthenticatorChecker called " + ctx);
-            Logger.info("ctx.session().size() ---- > " + ctx.session().size());
-            Logger.info("Session role: " + ctx.session().get("role"));
-            Logger.info("Session email: " + ctx.session().get("email"));
-            Logger.info("Session id: " + ctx.session().get("id"));
+            Logger.debug("AuthenticatorChecker called " + ctx);
+            Logger.debug("ctx.session().size() ---- > " + ctx.session().size());
+            Logger.debug("Session role: " + ctx.session().get("role"));
+            Logger.debug("Session email: " + ctx.session().get("email"));
+            Logger.debug("Session userid: " + ctx.session().get("id"));
 
             ctx.session().get("id");
             ctx.session().get("email");

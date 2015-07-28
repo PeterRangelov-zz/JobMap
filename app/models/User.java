@@ -10,7 +10,6 @@ import play.data.validation.Constraints.Email;
 import play.data.validation.Constraints.MinLength;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -25,10 +24,10 @@ public class User extends Model {
     @Column(length = 100)
     public String lastName;
 
-    @NotNull @Required @Email @Column(length = 100)
+    @NotNull @Required @Email @Column(length = 100, unique = true)
     public String emailAddress;
 
-    @Column(name = "pwd_hash", length = 128)
+    @NotNull @Required @Column(name = "pwd_hash", length = 128)
     public String passwordHash;
 
     public DateTime lastLogin;
@@ -67,6 +66,8 @@ public class User extends Model {
 
         @Required(message = "Password is required") @MinLength(value = 6, message = "Password must be at least 6 characters")
         public String password;
+
+
     }
 
     public static class RegisterForm {
