@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
-import play.data.validation.Constraints;
+import play.data.validation.Constraints.Email;
+import play.data.validation.Constraints.MinLength;
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -23,7 +25,7 @@ public class User extends Model {
     @Column(length = 100)
     public String lastName;
 
-    @NotNull @Constraints.Required @Constraints.Email @Column(length = 100)
+    @NotNull @Required @Email @Column(length = 100)
     public String emailAddress;
 
     @Column(name = "pwd_hash", length = 128)
@@ -38,10 +40,10 @@ public class User extends Model {
 
     public boolean accountValidated;
 
-    @Constraints.Required @Enumerated(value= EnumType.STRING)
+    @Required @Enumerated(value= EnumType.STRING)
     public Role role;
 
-    @Constraints.Required @Enumerated(value= EnumType.STRING)
+    @Required @Enumerated(value= EnumType.STRING)
     public Plan plan = Plan.PLAN1;
 
     @Column(length = 100)
@@ -60,7 +62,10 @@ public class User extends Model {
     }
 
     public static class SigninForm {
+        @Required(message = "Email is required") @Email(message = "Please enter a valid email address")
         public String emailAddress;
+
+        @Required(message = "Password is required") @MinLength(value = 6, message = "Password must be at least 6 characters")
         public String password;
     }
 
