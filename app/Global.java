@@ -47,6 +47,7 @@ public class Global extends GlobalSettings {
                     csvReader.addProperty("plan");
                     csvReader.addProperty("stripeToken");
                     csvReader.addProperty("passwordHash");
+                    csvReader.addIgnore();
 
                     csvReader.process(reader);
 
@@ -79,6 +80,7 @@ public class Global extends GlobalSettings {
                     sitesCsvReader.addProperty("address.zipcode");
                     sitesCsvReader.addProperty("address.lat");
                     sitesCsvReader.addProperty("address.lon");
+                    sitesCsvReader.addIgnore();
 
                     File groupsFile = new File("conf/fixtures/Fixtures - Groups.csv");
                     FileReader groupsReader = new FileReader(groupsFile);
@@ -91,6 +93,7 @@ public class Global extends GlobalSettings {
                     groupsCsvReader.addProperty("type");
                     groupsCsvReader.addProperty("isDemocratic");
                     groupsCsvReader.addProperty("isPartnershipOpportunity");
+                    groupsCsvReader.addIgnore();
 
                     sitesCsvReader.process(sitesReader);
                     groupsCsvReader.process(groupsReader);

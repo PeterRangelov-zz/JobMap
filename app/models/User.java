@@ -17,19 +17,23 @@ public class User extends Model {
     @Id
     public Long id;
 
+    @Column(length = 100)
     public String firstName;
+
+    @Column(length = 100)
     public String lastName;
 
-    @NotNull @Constraints.Required @Constraints.Email
+    @NotNull @Constraints.Required @Constraints.Email @Column(length = 100)
     public String emailAddress;
 
-    @Column(name = "pwd_hash")
+    @Column(name = "pwd_hash", length = 128)
     public String passwordHash;
 
     public DateTime lastLogin;
 
     public boolean accountLocked;
 
+    @Column(length = 100)
     public String validationToken;
 
     public boolean accountValidated;
@@ -58,6 +62,13 @@ public class User extends Model {
     public static class SigninForm {
         public String emailAddress;
         public String password;
+    }
+
+    public static class RegisterForm {
+        public String emailAddress;
+        public String password;
+        public String passwordConfirm;
+        public Role role;
     }
 
     public static User findByEmail (String email) {

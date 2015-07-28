@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 
 <html>
@@ -37,8 +36,11 @@
 
 
         <script>
-            $("#email").val("peter.rangelov11@@gmail.com")
-            $("#password").val("123123")
+            if (location.hostname == "localhost") {
+                $("#email").val("peter.rangelov11@@gmail.com")
+                $("#password").val("12312")
+            }
+
         </script>
     </body>
 </html>

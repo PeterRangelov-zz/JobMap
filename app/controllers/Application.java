@@ -53,6 +53,7 @@ public class Application extends Controller {
             }
 
 
+            session("id", String.valueOf(user.id));
             session("role", user.role.toString());
             session("firstName", user.firstName);
             session("email", user.emailAddress);
