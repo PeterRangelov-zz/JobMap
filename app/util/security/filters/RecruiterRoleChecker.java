@@ -15,10 +15,6 @@ import views.html.public_area.signin;
 public class RecruiterRoleChecker extends Simple {
 
     public Promise<Result> call(Context ctx) throws Throwable {
-        Logger.debug("Calling action for " + ctx);
-        Logger.debug("ctx.session().size() ---- > " + ctx.session().size());
-        Logger.debug("Session firstName: " + ctx.session().get("firstName"));
-        Logger.debug("Session role: " + ctx.session().get("role"));
 
         if (ctx.session().get("role").equalsIgnoreCase(User.Role.RECRUITER.toString())) {
             return delegate.call(ctx);

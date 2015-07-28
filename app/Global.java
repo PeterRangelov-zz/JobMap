@@ -19,13 +19,6 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application app) {
         Env.printEnvironmentVariables();
-        String password = "123123";
-        String hashedPassword = String.valueOf(DigestUtils.sha512Hex(password + "publicstatic"));
-
-        Logger.debug("password: " + password);
-        Logger.debug("hashed password: " + hashedPassword);
-
-        Logger.debug(String.valueOf(hashedPassword.equals(DigestUtils.sha512Hex(password + "publicstatic"))));
 
 //        if (Env.get(Variable.ENVIRONMENT).equalss("DEV")) {
 

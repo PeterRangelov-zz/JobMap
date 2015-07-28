@@ -1,5 +1,7 @@
 package controllers;
 
+import models.User.SigninForm;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import util.security.annotations.Admin;
@@ -20,7 +22,7 @@ public class Pages extends Controller {
     public static Result earlyBird() { return ok(early_bird.render()); }
 
     public static Result signIn() {
-        return ok(signin.render());
+        return ok(signin.render(Form.form(SigninForm.class)));
     }
 
     @Admin

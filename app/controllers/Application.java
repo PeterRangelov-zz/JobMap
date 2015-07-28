@@ -6,6 +6,7 @@ import models.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 import play.*;
+import play.api.data.validation.ValidationError;
 import play.data.Form;
 import play.mvc.*;
 
@@ -14,9 +15,11 @@ import util.security.misc.Mailchimp;
 import util.security.misc.Mailchimp.EarlyAccessRegistration;
 import models.User.SigninForm;
 import models.User.Role;
+import views.html.public_area.signin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class Application extends Controller {
     public static final Form<EarlyAccessRegistration> mailchimpForm = Form.form(EarlyAccessRegistration.class);
@@ -36,9 +39,19 @@ public class Application extends Controller {
     }
 
     public static Result authenticateUser() {
-        SigninForm form = signinForm.bindFromRequest().get();
-        Logger.debug(form.emailAddress);
-        Logger.debug(form.password);
+        Form<SigninForm> boundForm = signinForm.bindFromRequest();
+        // VALIDATE FORM
+        if (boundForm.hasErrors()) {
+            Logger.debug("FORM HAS " + boundForm.errors().size() + " ERRORS");
+            Logger.debug(String.valueOf(boundForm.errorsAsJson()));
+            return badRequest(signin.render(boundForm));
+        }
+        SigninForm form = boundForm.get();
+
+        Logger.debug(String.valueOf(signinForm.hasErrors()));
+//        Logger.debug(form.emailAddress);
+//        Logger.debug(form.password);
+
         try {
             User user = User.findByEmail(form.emailAddress);
             Logger.info(user.toString());

@@ -1,4 +1,7 @@
+@import play.data.Form
+@import models.User.SigninForm
 
+@(f: Form[SigninForm])
 
 <!DOCTYPE html>
 
@@ -25,9 +28,23 @@
                     <div class="small-12 medium-6 columns">
                         <br>
                         Sign in
+                        <br>
                         <form method="post" action="@routes.Application.authenticateUser()" id="form">
                             <input type="text" id="email" name="emailAddress" placeholder="Email address">
                             <input type="password" id="password" name="password" placeholder="Password">
+
+                            @if(f.errors().containsKey("emailAddress")){
+                                @for(e <- f.errors().get("emailAddress")) {
+                                    @e.message()<br>
+                                }
+                            }
+                            @if(f.errors().containsKey("password")){
+                                @for(e <- f.errors().get("password")) {
+                                    @e.message()<br>
+                                }
+                            }
+
+                            <br>
                             <button type="submit">Sign in</button>
                         </form>
                     </div>
@@ -38,7 +55,7 @@
 
         <script>
             $("#email").val("peter.rangelov11@@gmail.com")
-            $("#password").val("123123")
+            $("#password").val("12312")
         </script>
     </body>
 </html>
