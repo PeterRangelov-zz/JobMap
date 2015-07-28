@@ -1,7 +1,8 @@
 package util.security.filters;
 
-import models.User;
+import models.User.SigninForm;
 import play.Logger;
+import play.data.Form;
 import play.libs.F.Promise;
 import play.mvc.Action.Simple;
 import play.mvc.Http.Context;
@@ -17,7 +18,9 @@ public class AuthenticatorChecker extends Simple {
             Logger.info("ctx.session().size() ---- > " + ctx.session().size());
             Logger.info("Session role: " + ctx.session().get("role"));
             Logger.info("Session email: " + ctx.session().get("email"));
+            Logger.info("Session id: " + ctx.session().get("id"));
 
+            ctx.session().get("id");
             ctx.session().get("email");
             ctx.session().get("role");
 
@@ -26,7 +29,7 @@ public class AuthenticatorChecker extends Simple {
         }
         catch (NullPointerException e) {
             Logger.debug(this.getClass() + "called. NullPointerExceltion catch statement");
-            return Promise.pure(Results.ok(signin.render()));
+            return Promise.pure(Results.ok(signin.render(Form.form(SigninForm.class))));
         }
 
     }
