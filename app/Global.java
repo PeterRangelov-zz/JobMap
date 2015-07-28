@@ -20,7 +20,7 @@ public class Global extends GlobalSettings {
     public void onStart(Application app) {
 //        Env.printEnvironmentVariables();
 
-        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
+//        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
 
             if (User.find.findList().isEmpty()) {
                 try {
@@ -102,7 +102,7 @@ public class Global extends GlobalSettings {
 
 
 
-    }
+//    }
 
     @Override
     public void onStop(Application app) {
