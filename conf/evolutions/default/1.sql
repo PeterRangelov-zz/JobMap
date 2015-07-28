@@ -79,7 +79,7 @@ create table user (
   id                        bigint auto_increment not null,
   first_name                varchar(100),
   last_name                 varchar(100),
-  email_address             varchar(100) not null,
+  email_address             varchar(255) not null,
   pwd_hash                  varchar(128),
   last_login                datetime,
   account_locked            tinyint(1) default 0,

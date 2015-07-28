@@ -18,9 +18,9 @@ public class Global extends GlobalSettings {
 
     @Override
     public void onStart(Application app) {
-        Env.printEnvironmentVariables();
+//        Env.printEnvironmentVariables();
 
-//        if (Env.get(Variable.ENVIRONMENT).equalss("DEV")) {
+        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
 
             if (User.find.findList().isEmpty()) {
                 try {
@@ -97,7 +97,7 @@ public class Global extends GlobalSettings {
                 }
 
             }
-//        }
+        }
 
 
 
