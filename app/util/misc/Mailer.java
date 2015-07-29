@@ -1,6 +1,7 @@
 package util.misc;
 
 import com.sendgrid.SendGrid;
+import com.sendgrid.SendGrid.Email;
 import com.sendgrid.SendGridException;
 import models.User;
 import play.Logger;
@@ -15,12 +16,12 @@ import java.util.Properties;
  * Created by peterrangelov on 7/29/15.
  */
 public class Mailer {
-    public static void sendActivationToken (String token) {
+    public static boolean sendActivationToken (String token) {
         SendGrid sendgrid = new SendGrid(Env.get(Variable.SENDGRID_USERNAME), Env.get(Variable.SENDGRID_PASSWORD));
         // FIND USER
         String emailAddress = User.findByEmail("peter.rangelov11@gmail.com").emailAddress;
 
-        SendGrid.Email email = new SendGrid.Email();
+        Email email = new Email();
         email.addTo(emailAddress);
         email.setFrom("peter.rangelov11@gmail.com");
         email.setSubject("Activate your Jobmap account");
@@ -29,9 +30,11 @@ public class Mailer {
         try {
             SendGrid.Response response = sendgrid.send(email);
             System.out.println(response.getMessage());
+            return true;
         }
         catch (SendGridException e) {
             System.err.println(e);
+            return false;
         }
     }
 
