@@ -1,15 +1,22 @@
 package models;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.annotation.EnumValue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.joda.time.DateTime;
-import play.data.validation.Constraints.Email;
+import play.Logger;
 import play.data.validation.Constraints.MinLength;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
+import util.misc.Env;
+import util.validation.JobmapValidator.EmailInDB;
+import util.validation.JobmapValidator.*;
+import util.misc.Env.Variable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -24,7 +31,7 @@ public class User extends Model {
     @Column(length = 100)
     public String lastName;
 
-    @NotNull @Required @Email @Column(length = 100, unique = true)
+    @NotNull @Required @Column(length = 100, unique = true)
     public String emailAddress;
 
     @NotNull @Required @Column(name = "pwd_hash", length = 128)
@@ -34,10 +41,10 @@ public class User extends Model {
 
     public boolean accountLocked;
 
-    @Column(length = 100)
+    @Column(length = 30)
     public String validationToken;
 
-    public boolean accountValidated;
+    public boolean accountActivated;
 
     @Required @Enumerated(value= EnumType.STRING)
     public Role role;
@@ -61,24 +68,86 @@ public class User extends Model {
     }
 
     public static class SigninForm {
-        @Required(message = "Email is required") @Email(message = "Please enter a valid email address")
+        @EmailInDB
+        public String emailAddress;
+
+        @Required(message = "Password is required")
+        public String password;
+
+        public String validate() {
+            if (verifyPassword(emailAddress, password)) {
+                return null;
+            }
+            return "Invalid password";
+        }
+    }
+
+    public static class RegisterForm {
+        @Email @EmailNotInDB
         public String emailAddress;
 
         @Required(message = "Password is required") @MinLength(value = 6, message = "Password must be at least 6 characters")
         public String password;
 
-
-    }
-
-    public static class RegisterForm {
-        public String emailAddress;
-        public String password;
+        @Required
         public String passwordConfirm;
+
+        @Required(message = "Please select a role")
         public Role role;
+
+        public String validate () {
+            if (password.equals(passwordConfirm)) {
+                return null;
+            }
+            return "Passwords must match";
+        }
     }
 
     public static User findByEmail (String email) {
         return User.find.where().eq("emailAddress", email).findUnique();
+    }
+
+    public static boolean emailExists (String email) {
+        if (findByEmail(email)==null) {
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
+    public static boolean verifyPassword (String email, String password) {
+        return findByEmail(email).passwordHash.equals(DigestUtils.sha512Hex(password+Env.get(Variable.PWD_SALT)));
+    }
+
+    public static void registerUser (String emailAddress, String password, Role role) {
+        String token = RandomStringUtils.randomAlphabetic(30);
+        Logger.debug("registering user...");
+        Logger.debug(emailAddress);
+        Logger.debug(password);
+        Logger.debug(role.toString());
+        Logger.debug(token);
+        User u = new User();
+        u.emailAddress=emailAddress;
+        u.passwordHash=DigestUtils.sha512Hex(password+Env.get(Variable.PWD_SALT));
+        u.role=role;
+        u.accountActivated=false;
+        u.validationToken=token;
+        Logger.debug(u.toString());
+        // SEND EMAIL
+//        Ebean.save(u);
+
+
+    }
+
+    public static void activateAccount (String token) {
+        User u = User.find.where().eq("validationToken", token).findUnique();
+        u.accountActivated=true;
+        u.validationToken=null;
+        Logger.info(u.toString());
+        // SEND EMAIL
+//        Ebean.save(u);
     }
 
 }

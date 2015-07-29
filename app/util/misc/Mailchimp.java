@@ -1,4 +1,4 @@
-package util.security.misc;
+package util.misc;
 
 import com.ecwid.mailchimp.MailChimpClient;
 import com.ecwid.mailchimp.MailChimpException;
@@ -6,7 +6,7 @@ import com.ecwid.mailchimp.MailChimpObject;
 import com.ecwid.mailchimp.method.v2_0.lists.Email;
 import com.ecwid.mailchimp.method.v2_0.lists.SubscribeMethod;
 import play.Logger;
-import util.security.misc.Env.Variable;
+
 import java.io.IOException;
 
 /**
@@ -19,8 +19,8 @@ public class Mailchimp {
         Logger.info("Subscribing...");
 
         SubscribeMethod subscribeMethod = new SubscribeMethod();
-        subscribeMethod.apikey = Env.get(Variable.MAILCHIMP_API_KEY);
-        subscribeMethod.id = Env.get(Variable.MAILCHIMP_LIST_ID);
+        subscribeMethod.apikey = Env.get(Env.Variable.MAILCHIMP_API_KEY);
+        subscribeMethod.id = Env.get(Env.Variable.MAILCHIMP_LIST_ID);
         subscribeMethod.email = new Email();
         subscribeMethod.email.email = emailAddress;
         subscribeMethod.double_optin = false;

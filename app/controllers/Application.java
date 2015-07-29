@@ -6,24 +6,23 @@ import models.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.joda.time.DateTime;
 import play.*;
-import play.api.data.validation.ValidationError;
 import play.data.Form;
 import play.mvc.*;
-
-import util.security.misc.Env;
-import util.security.misc.Mailchimp;
-import util.security.misc.Mailchimp.EarlyAccessRegistration;
+import util.misc.Env;
+import util.misc.Mailchimp;
+import util.misc.Mailchimp.EarlyAccessRegistration;
 import models.User.SigninForm;
+import models.User.RegisterForm;
 import models.User.Role;
 import views.html.public_area.signin;
-
+import views.html.public_area.register;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class Application extends Controller {
     public static final Form<EarlyAccessRegistration> mailchimpForm = Form.form(EarlyAccessRegistration.class);
     public static final Form<SigninForm> signinForm = Form.form(SigninForm.class);
+    public static final Form<RegisterForm> registerForm = Form.form(RegisterForm.class);
 
 
     public static Result signUp() throws MailChimpException, IOException {
@@ -101,6 +100,19 @@ public class Application extends Controller {
         // STORE USER IN SESSION
 
 
+    }
+
+    public static Result registerUser() {
+        Form<RegisterForm> boundForm = registerForm.bindFromRequest();
+        // VALIDATE FORM
+        if (boundForm.hasErrors()) {
+            Logger.debug("FORM HAS " + boundForm.errors().size() + " ERRORS");
+            Logger.debug(String.valueOf(boundForm.errorsAsJson()));
+            return badRequest(register.render(boundForm));
+        }
+        RegisterForm form = boundForm.get();
+        User.registerUser(form.emailAddress, form.password, form.role);
+        return redirect("/");
     }
 
     public static Result upload() {

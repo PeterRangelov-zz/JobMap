@@ -1,11 +1,11 @@
 @import play.data.Form
-@import models.User.SigninForm
+@import models.User.RegisterForm
 
-@(f: Form[SigninForm])
+@(f: Form[RegisterForm])
 
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <head>
         <title>JobMap.io</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("../../../public/stylesheets/main.css")">
@@ -27,11 +27,20 @@
             <div class="row">
                 <div class="small-12 medium-6 columns">
                     <br>
-                    Sign in
+                    Register
                     <br>
-                    <form method="post" action="@routes.Application.authenticateUser()" id="form">
+                    <form method="post" action="@routes.Application.registerUser()" id="form">
                         <input type="text" id="email" name="emailAddress" placeholder="Email address">
                         <input type="password" id="password" name="password" placeholder="Password">
+                        <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Retype Password">
+                        <label>
+                            <input type="radio" id="role_applicant" name="role" value="APPLICANT"/> Applicant
+                        </label>
+                        <label>
+                            <input type="radio" id="role_recruiter" name="role" value="RECRUITER"/> Recruiter
+                        </label>
+
+
 
                         @if(f.hasGlobalErrors) {
                             @f.error("").message()<br>
@@ -46,9 +55,14 @@
                                 @e.message()<br>
                             }
                         }
+                        @if(f.errors().containsKey("confirm.password")){
+                            @for(e <- f.errors().get("confirm.password")) {
+                                @e.message()<br>
+                            }
+                        }
 
                         <br>
-                        <button type="submit">Sign in</button>
+                        <button type="submit">Register</button>
                     </form>
                 </div>
             </div>
@@ -58,8 +72,10 @@
 
         <script>
             if (location.hostname == "localhost") {
-                $("#email").val("peter.rangelov11@@gmail.com")
-                $("#password").val("12312")
+                $("#email").val("da04452@@umbc.edu")
+                $("#password").val("123123")
+                $("#passwordConfirm").val("123123")
+                $("#role_applicant").prop("checked", "checked")
             }
 
         </script>

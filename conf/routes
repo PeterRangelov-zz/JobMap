@@ -3,6 +3,7 @@
 
 
 POST        /authenticateUser        controllers.Application.authenticateUser()
+POST        /registerUser            controllers.Application.registerUser()
 POST        /register                controllers.Application.signUp()
 GET         /signout                 controllers.Application.signOut()
 
@@ -11,6 +12,7 @@ GET         /signout                 controllers.Application.signOut()
 # PAGES
 GET         /                        controllers.Pages.map
 GET         /signin                  controllers.Pages.signIn()
+GET         /register                controllers.Pages.register()
 GET         /test                    controllers.Pages.index()
 GET         /earlybird               controllers.Pages.earlyBird()
 GET         /thanks                  controllers.Pages.thanks()

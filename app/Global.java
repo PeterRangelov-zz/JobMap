@@ -3,7 +3,6 @@ import com.avaje.ebean.text.csv.CsvReader;
 import models.Group;
 import models.Site;
 import models.User;
-import org.apache.commons.codec.digest.DigestUtils;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
@@ -11,14 +10,16 @@ import play.Logger;
 import java.io.File;
 import java.io.FileReader;
 
-import util.security.misc.Env;
-import util.security.misc.Env.Variable;
+import util.misc.Env;
+import util.misc.Env.Variable;
+import util.misc.Mailer;
 
 public class Global extends GlobalSettings {
 
     @Override
     public void onStart(Application app) {
 //        Env.printEnvironmentVariables();
+        Mailer.sendActivationToken("123");
 
 //        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
 
@@ -35,7 +36,7 @@ public class Global extends GlobalSettings {
                     csvReader.addProperty("emailAddress");
                     csvReader.addIgnore();
                     csvReader.addProperty("accountLocked");
-                    csvReader.addProperty("accountValidated");
+                    csvReader.addProperty("accountActivated");
                     csvReader.addProperty("role");
                     csvReader.addProperty("plan");
                     csvReader.addProperty("stripeToken");

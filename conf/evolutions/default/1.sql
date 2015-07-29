@@ -79,17 +79,18 @@ create table user (
   id                        bigint auto_increment not null,
   first_name                varchar(100),
   last_name                 varchar(100),
-  email_address             varchar(255) not null,
-  pwd_hash                  varchar(128),
+  email_address             varchar(100) not null,
+  pwd_hash                  varchar(128) not null,
   last_login                datetime,
   account_locked            tinyint(1) default 0,
-  validation_token          varchar(100),
-  account_validated         tinyint(1) default 0,
+  validation_token          varchar(30),
+  account_activated         tinyint(1) default 0,
   role                      varchar(1),
   plan                      varchar(5),
   stripe_token              varchar(100),
   constraint ck_user_role check (role in ('R','A','X')),
   constraint ck_user_plan check (plan in ('FREE','PLAN1','PLAN2','PLAN3')),
+  constraint uq_user_email_address unique (email_address),
   constraint pk_user primary key (id))
 ;
 

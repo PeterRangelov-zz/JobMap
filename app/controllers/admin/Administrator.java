@@ -3,7 +3,7 @@ package controllers.admin;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
-import util.security.annotations.Admin;
+import util.security.AuthChecker.Admin;
 import views.html.admin_area.test;
 
 @Admin

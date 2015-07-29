@@ -1,4 +1,4 @@
-package util.security.misc;
+package util.misc;
 
 import com.avaje.ebean.Ebean;
 import org.apache.commons.io.FileUtils;
