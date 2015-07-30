@@ -4,6 +4,7 @@ import com.avaje.ebean.Ebean;
 import com.ecwid.mailchimp.MailChimpException;
 import models.User;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.h2.util.StringUtils;
 import org.joda.time.DateTime;
 import play.*;
 import play.data.Form;
@@ -48,8 +49,6 @@ public class Application extends Controller {
         SigninForm form = boundForm.get();
 
         Logger.debug(String.valueOf(signinForm.hasErrors()));
-//        Logger.debug(form.emailAddress);
-//        Logger.debug(form.password);
 
         try {
             User user = User.findByEmail(form.emailAddress);
@@ -65,10 +64,12 @@ public class Application extends Controller {
             }
 
 
-            session("id", String.valueOf(user.id));
-            session("role", user.role.toString());
-            session("firstName", user.firstName);
-            session("email", user.emailAddress);
+            session("id", String.valueOf(user.getId()));
+            session("role", user.getRole().toString());
+            if (StringUtils.isNullOrEmpty(user.getFirstName())) {
+                session("firstName", user.getFirstName());
+            }
+            session("email", user.getEmailAddress());
 
             user.setLastLogin(new DateTime());
             Ebean.save(user);
@@ -77,29 +78,20 @@ public class Application extends Controller {
                 return redirect("/admin");
             }
             if (user.role.equals(Role.APPLICANT)) {
-                return redirect("/applicant");
+                return TODO;
+//                return redirect("/applicant");
             }
             if (user.role.equals(Role.RECRUITER)) {
-                return redirect("/recruiter");
+                return TODO;
+//                return redirect("/recruiter");
             }
-
             return redirect("/signin");
-
-
 
         }
         catch (NullPointerException e) {
             flash("error", "Username or password incorrect");
             return redirect("/signin");
         }
-
-
-
-        // CHECK USER ROLE
-
-        // STORE USER IN SESSION
-
-
     }
 
     public static Result registerUser() {
@@ -115,13 +107,16 @@ public class Application extends Controller {
         return redirect("/");
     }
 
-    public static Result upload() {
-        File file = request().body().asRaw().asFile();
-        Logger.info(file.getName());
-        return ok("File uploaded");
+    public static Result activateAccount (String token) {
+        try {
+            Logger.debug(token);
+            User.activateAccount(token);
+        }
+        catch (NullPointerException e) {
+            return Results.notFound(String.format("Token %s not found.", token));
+        }
+        return redirect("/signin");
     }
-
-
 
 
 

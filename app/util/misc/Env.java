@@ -31,6 +31,7 @@ public class Env {
 //        DB_NAME(),
         DB_PASSWORD("db.default.password"),
         STRIPE_API_KEY("123"),
+        HOST("host"),
         PWD_SALT("pwd.salt");
 
 

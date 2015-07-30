@@ -19,7 +19,7 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application app) {
 //        Env.printEnvironmentVariables();
-        Mailer.sendActivationToken("123");
+//        Mailer.sendActivationToken("123");
 
 //        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
 

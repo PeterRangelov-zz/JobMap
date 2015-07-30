@@ -6,6 +6,8 @@ POST        /authenticateUser        controllers.Application.authenticateUser()
 POST        /registerUser            controllers.Application.registerUser()
 POST        /register                controllers.Application.signUp()
 GET         /signout                 controllers.Application.signOut()
+GET         /activate/:token         controllers.Application.activateAccount(token)
+
 
 
 

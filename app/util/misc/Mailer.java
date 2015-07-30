@@ -16,16 +16,36 @@ import java.util.Properties;
  * Created by peterrangelov on 7/29/15.
  */
 public class Mailer {
-    public static boolean sendActivationToken (String token) {
+    public static boolean sendActivationToken (String emailAddress, String token) {
         SendGrid sendgrid = new SendGrid(Env.get(Variable.SENDGRID_USERNAME), Env.get(Variable.SENDGRID_PASSWORD));
         // FIND USER
-        String emailAddress = User.findByEmail("peter.rangelov11@gmail.com").emailAddress;
+//        String emailAddress = User.findByEmail("peter.rangelov11@gmail.com").emailAddress;
+
 
         Email email = new Email();
         email.addTo(emailAddress);
         email.setFrom("peter.rangelov11@gmail.com");
         email.setSubject("Activate your Jobmap account");
-        email.setText("Put link here");
+        email.setHtml(String.format("<a href='%sactivate/%s'>Click here</a> to activate your account.", Env.get(Variable.HOST), token));
+
+        try {
+            SendGrid.Response response = sendgrid.send(email);
+            System.out.println(response.getMessage());
+            return response.getStatus();
+        }
+        catch (SendGridException e) {
+            System.err.println(e);
+            return false;
+        }
+    }
+
+    public static boolean sendActivationConfirmation (String emailAddress) {
+        SendGrid sendgrid = new SendGrid(Env.get(Variable.SENDGRID_USERNAME), Env.get(Variable.SENDGRID_PASSWORD));
+        Email email = new Email();
+        email.addTo(emailAddress);
+        email.setFrom("peter.rangelov11@gmail.com");
+        email.setSubject("Your Jobmap account has been activated");
+        email.setText("Account activated.");
 
         try {
             SendGrid.Response response = sendgrid.send(email);

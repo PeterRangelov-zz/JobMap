@@ -14,6 +14,7 @@ import play.data.validation.Constraints.MinLength;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 import util.misc.Env;
+import util.misc.Mailer;
 import util.validation.JobmapValidator.EmailInDB;
 import util.validation.JobmapValidator.*;
 import util.misc.Env.Variable;
@@ -108,11 +109,11 @@ public class User extends Model {
     }
 
     public static boolean emailExists (String email) {
-        if (findByEmail(email)==null) {
-            return false;
+        if (findByEmail(email) != null) {
+            return true;
         }
         else {
-            return true;
+            return false;
         }
 
     }
@@ -129,25 +130,26 @@ public class User extends Model {
         Logger.debug(role.toString());
         Logger.debug(token);
         User u = new User();
-        u.emailAddress=emailAddress;
-        u.passwordHash=DigestUtils.sha512Hex(password+Env.get(Variable.PWD_SALT));
-        u.role=role;
-        u.accountActivated=false;
-        u.validationToken=token;
+        u.setEmailAddress(emailAddress);
+        u.setPasswordHash(DigestUtils.sha512Hex(password+Env.get(Variable.PWD_SALT)));
+        u.setRole(role);
+        u.setAccountActivated(false);
+        u.setValidationToken(token);
         Logger.debug(u.toString());
         // SEND EMAIL
-//        Ebean.save(u);
-
-
+        Mailer.sendActivationToken(u.getEmailAddress(), token);
+        Ebean.save(u);
     }
 
     public static void activateAccount (String token) {
         User u = User.find.where().eq("validationToken", token).findUnique();
-        u.accountActivated=true;
-        u.validationToken=null;
+        u.setAccountActivated(true);
+        u.setValidationToken(null);
         Logger.info(u.toString());
-        // SEND EMAIL
-//        Ebean.save(u);
+        Mailer.sendActivationConfirmation(u.getEmailAddress());
+
+        Ebean.save(u);
+
     }
 
 }
