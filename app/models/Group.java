@@ -24,39 +24,30 @@ public class Group extends Model {
     @Column(name = "group_name", length = 50) @NotNull @Constraints.Required
     public String name;
 
-    public Set<Type> typesSet = new HashSet<>(5);
+    @Constraints.Required @Column(length = 50)
+    public String logoUrl;
+
+    @Enumerated(value= EnumType.STRING)
+    public Type type;
 
     @Column(name="D")
     public boolean isDemocratic;
 
-    @Column(name="L")
-    public boolean isLocal;
-
-    @Column(name="R")
-    public boolean isRegional;
-
-    @Column(name="N")
-    public boolean isNational;
-
     @Column(name="P")
     public boolean isPartnershipOpportunity;
 
+    @ManyToMany(mappedBy = "groups")
+    public List<Recruiter> recruiters = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "groups", cascade=CascadeType.ALL)
-    public List<Recruiter> recruiters = new ArrayList<Recruiter>();
-
-    @OneToMany(mappedBy = "group", cascade=CascadeType.ALL)
-    public List<Site> sites = new ArrayList<Site>();
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    public List<Site> sites = new ArrayList<>();
 
 
-    public static Finder<Long, Group> find = new Finder<Long, Group>(Long.class, Group.class);
+    public static Finder<Long, Group> find = new Finder<>(Long.class, Group.class);
 
     public enum Type {
-        @EnumValue("D") DEMOCRATIC,
         @EnumValue("L") LOCAL,
         @EnumValue("R") REGIONAL,
         @EnumValue("N") NATIONAL,
-        @EnumValue("P") PARTNERSHIP_OPPORTUNITY
-
     }
 }

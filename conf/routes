@@ -1,19 +1,27 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
-# ~~~~
 
-# Home page
-GET         /                    controllers.Application.map
-GET         /test                controllers.Application.index()
-GET         /sql                 controllers.Application.sqlMap()
-GET         /earlybird           controllers.Application.earlyBird()
-POST        /signup              controllers.Application.signUp()
-GET         /thanks              controllers.Application.thanks()
+
+POST        /authenticateUser        controllers.Application.authenticateUser()
+POST        /registerUser            controllers.Application.registerUser()
+POST        /register                controllers.Application.signUp()
+GET         /signout                 controllers.Application.signOut()
+GET         /activate/:token         controllers.Application.activateAccount(token)
 
 
 
+
+# PAGES
+GET         /                        controllers.Pages.map
+GET         /signin                  controllers.Pages.signIn()
+GET         /register                controllers.Pages.register()
+GET         /test                    controllers.Pages.index()
+GET         /earlybird               controllers.Pages.earlyBird()
+GET         /thanks                  controllers.Pages.thanks()
+GET         /applicant               controllers.Pages.applicantHome()
+GET         /recruiter               controllers.Pages.recruiterHome()
+GET         /admin                   controllers.Pages.adminHome()
+GET         /admintest               controllers.admin.Administrator.test()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.at(path="/public", file)
-
-
+GET         /assets/*file            controllers.Assets.at(path="/public", file)

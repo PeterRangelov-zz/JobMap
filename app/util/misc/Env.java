@@ -1,8 +1,7 @@
-package util;
+package util.misc;
 
 import play.Logger;
 import play.Play;
-import util.Env.Variable;
 
 public class Env {
     public static String get (Variable key) {
@@ -22,6 +21,8 @@ public class Env {
         ENVIRONMENT("environment"),
         MAILCHIMP_API_KEY("mailchimp.apikey"),
         MAILCHIMP_LIST_ID("mailchimp.listid"),
+        SENDGRID_USERNAME("sendgrid.username"),
+        SENDGRID_PASSWORD("sendgrid.password"),
         DB_EVOLUTIONS_PLUGIN("applyEvolutions.default"),
         ENABLE_EVOLUTIONS("applyEvolutions.default"),
         DB_APPLY_EVOLUTIONS("applyEvolutions.default"),
@@ -29,7 +30,9 @@ public class Env {
         DB_URL("db.default.url"),
 //        DB_NAME(),
         DB_PASSWORD("db.default.password"),
-        STRIPE_API_KEY("123");
+        STRIPE_API_KEY("123"),
+        HOST("host"),
+        PWD_SALT("pwd.salt");
 
 
         private String confName;

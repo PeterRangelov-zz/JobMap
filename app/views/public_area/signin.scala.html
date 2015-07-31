@@ -1,0 +1,67 @@
+@import play.data.Form
+@import models.User.SigninForm
+
+@(f: Form[SigninForm])
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>JobMap.io</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("../../../public/stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("../../../public/images/favicon.png")">
+        <link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/foundation/5.3.3/css/foundation.min.css>
+        <link rel=stylesheet href=//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css>
+        <script src=//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js></script>
+        <script src=//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/js/foundation.min.js></script>
+        <script src=//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/js/vendor/modernizr.js></script>
+
+        @*<script src=//cdn.jsdelivr.net/livejs/4/live.js></script>*@
+
+    </head>
+    <body>
+
+
+
+        <div class="container">
+            <div class="row">
+                <div class="small-12 medium-6 columns">
+                    <br>
+                    Sign in
+                    <br>
+                    <form method="post" action="@routes.Application.authenticateUser()" id="form">
+                        <input type="text" id="email" name="emailAddress" placeholder="Email address">
+                        <input type="password" id="password" name="password" placeholder="Password">
+
+                        @if(f.hasGlobalErrors) {
+                            @f.error("").message()<br>
+                        }
+                        @if(f.errors().containsKey("emailAddress")){
+                            @for(e <- f.errors().get("emailAddress")) {
+                                @e.message()<br>
+                            }
+                        }
+                        @if(f.errors().containsKey("password")){
+                            @for(e <- f.errors().get("password")) {
+                                @e.message()<br>
+                            }
+                        }
+
+                        <br>
+                        <button type="submit">Sign in</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+        <script>
+            if (location.hostname == "localhost") {
+                $("#email").val("peter.rangelov11@@gmail.com")
+                $("#password").val("12312")
+            }
+
+        </script>
+    </body>
+</html>

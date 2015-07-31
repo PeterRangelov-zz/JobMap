@@ -1,78 +1,116 @@
 import com.avaje.ebean.Ebean;
-import models.*;
+import com.avaje.ebean.text.csv.CsvReader;
+import models.Group;
+import models.Site;
+import models.User;
 import play.Application;
 import play.GlobalSettings;
 import play.Logger;
-import play.Play;
-import play.libs.Yaml;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import util.Env;
-import util.Env.Variable;
-import models.Address.State;
-import models.Site.Kind;
+
+import java.io.File;
+import java.io.FileReader;
+
+import util.misc.Env;
+import util.misc.Env.Variable;
+import util.misc.Mailer;
 
 public class Global extends GlobalSettings {
 
     @Override
     public void onStart(Application app) {
-        Env.printEnvironmentVariables();
+//        Env.printEnvironmentVariables();
+//        Mailer.sendActivationToken("123");
 
-        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
-            Ebean.save((List<Site>) Yaml.load("fixtures/sites.yml"));
+//        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
+
+            if (User.find.findList().isEmpty()) {
+                try {
+                    File file = new File("conf/fixtures/Fixtures - Users.csv");
+                    FileReader reader = new FileReader(file);
+                    CsvReader<User> csvReader = Ebean.createCsvReader(User.class);
+                    csvReader.setHasHeader(true, false);
+                    csvReader.setPersistBatchSize(20);
+
+                    csvReader.addProperty("firstName");
+                    csvReader.addProperty("lastName");
+                    csvReader.addProperty("emailAddress");
+                    csvReader.addIgnore();
+                    csvReader.addProperty("accountLocked");
+                    csvReader.addProperty("accountActivated");
+                    csvReader.addProperty("role");
+                    csvReader.addProperty("plan");
+                    csvReader.addProperty("stripeToken");
+                    csvReader.addProperty("passwordHash");
+                    csvReader.addIgnore();
+
+                    csvReader.process(reader);
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            if (Site.find.findList().isEmpty()) {
+                try {
+                    File sitesFile = new File("conf/fixtures/Fixtures - Sites.csv");
+                    FileReader sitesReader = new FileReader(sitesFile);
+                    CsvReader<Site> sitesCsvReader = Ebean.createCsvReader(Site.class);
+                    sitesCsvReader.setHasHeader(true, false);
+                    sitesCsvReader.setPersistBatchSize(20);
+
+                    sitesCsvReader.addProperty("name");
+                    sitesCsvReader.addProperty("logoUrl");
+                    sitesCsvReader.addProperty("type");
+                    sitesCsvReader.addProperty("hasGroup");
+                    sitesCsvReader.addProperty("isCommunity");
+                    sitesCsvReader.addProperty("isAcademic");
+                    sitesCsvReader.addProperty("isTrauma");
+                    sitesCsvReader.addProperty("territory");
+                    sitesCsvReader.addProperty("volume");
+                    sitesCsvReader.addProperty("address.street");
+                    sitesCsvReader.addProperty("address.suite");
+                    sitesCsvReader.addProperty("address.city");
+                    sitesCsvReader.addProperty("address.state");
+                    sitesCsvReader.addProperty("address.zipcode");
+                    sitesCsvReader.addProperty("address.lat");
+                    sitesCsvReader.addProperty("address.lon");
+                    sitesCsvReader.addIgnore();
+
+                    File groupsFile = new File("conf/fixtures/Fixtures - Groups.csv");
+                    FileReader groupsReader = new FileReader(groupsFile);
+                    CsvReader<Group> groupsCsvReader = Ebean.createCsvReader(Group.class);
+                    groupsCsvReader.setHasHeader(true, false);
+                    groupsCsvReader.setPersistBatchSize(20);
+
+                    groupsCsvReader.addProperty("name");
+                    groupsCsvReader.addProperty("logoUrl");
+                    groupsCsvReader.addProperty("type");
+                    groupsCsvReader.addProperty("isDemocratic");
+                    groupsCsvReader.addProperty("isPartnershipOpportunity");
+                    groupsCsvReader.addIgnore();
+
+                    sitesCsvReader.process(sitesReader);
+                    groupsCsvReader.process(groupsReader);
+
+
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
         }
 
 
 
 
-        // ----------------------------
-//        Applicant me = new Applicant();
-//        CV mine = new CV();
-//        mine.firstName="peter";
-//        mine.lastName="rangelov";
-//        mine.email="dfs";
-//        mine.medSchool="JHU";
-//        mine.medSchoolGraduation=new Date();
-//        mine.residencyProgram="JHU";
-//        mine.residencyGraduation=new Date();
-//        mine.state= Address.State.AK;
-//
-//        me.cv = mine;
-//
-//        me.save();
-//
-//        Address a = new Address("Street", "123", "Baltimore", State.MD, "21212", 123, 123);
-//        Site site = new Site();
-//        site.address=a;
-//        site.kind= Kind.FREESTANDING;
-//
-//        Group g1 = new Group();
-//        g1.name="Group";
-//        g1.isDemocratic=true;
-//        g1.isPartnershipOpportunity=true;
-//
-//
-//        site.group= g1;
-//
-//        Ebean.save(site);
-
-
-
-
-//        if (Hospital.find.findRowCount() == 0) {
-//            Ebean.save((List<Hospital>) Yaml.load("fixtures/test-data.yml"));
-//        }
-//
-//        if (User.find.findRowCount() ==0) {
-//
-//        }
-
-    }
+//    }
 
     @Override
     public void onStop(Application app) {
         Logger.info("Application shutdown...");
+        if (Env.get(Variable.ENVIRONMENT).equals("DEV")) {
+        }
     }
-
 }
+
+

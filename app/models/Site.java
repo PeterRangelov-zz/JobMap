@@ -22,8 +22,11 @@ public class Site extends Model {
     @Constraints.Required @Column(name = "site_name", length = 50)
     public String name;
 
+    @Constraints.Required @Column(length = 50)
+    public String logoUrl;
+
     @Enumerated(value= EnumType.STRING)
-    public Kind kind;
+    public Type type;
 
     @Enumerated(value= EnumType.STRING)
     public Territory territory;
@@ -40,26 +43,26 @@ public class Site extends Model {
     @Embedded
     public Address address;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     public Group group;
 
-    @ManyToMany(mappedBy = "sites", cascade=CascadeType.ALL)
-    public List<Recruiter> recruiters = new ArrayList<Recruiter>();
+    @ManyToMany(mappedBy = "sites", cascade = CascadeType.ALL)
+    public List<Recruiter> recruiters = new ArrayList<>();
 
     public boolean hasGroup;
 
     @Column(length = 6) @Constraints.Min(0) @Constraints.Max(900000) @Max(900000) @Min(0)
     public int volume;
 
-    public static Finder<Long, Site> find = new Finder<Long, Site>(Long.class, Site.class);
+    public static Finder<Long, Site> find = new Finder<>(Long.class, Site.class);
 
-    public enum Kind {
+    public enum Type {
         @EnumValue("H") HOSPITAL,
         @EnumValue("U") UCC,
         @EnumValue("F") FREESTANDING
     }
 
-    public enum Type {
+    public enum Kind {
         @EnumValue("C") COMMUNITY,
         @EnumValue("A") ACADEMIC,
         @EnumValue("T") TRAUMA,

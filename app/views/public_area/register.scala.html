@@ -1,0 +1,83 @@
+@import play.data.Form
+@import models.User.RegisterForm
+
+@(f: Form[RegisterForm])
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/html">
+    <head>
+        <title>JobMap.io</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("../../../public/stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("../../../public/images/favicon.png")">
+        <link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/foundation/5.3.3/css/foundation.min.css>
+        <link rel=stylesheet href=//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css>
+        <script src=//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js></script>
+        <script src=//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/js/foundation.min.js></script>
+        <script src=//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/js/vendor/modernizr.js></script>
+
+        @*<script src=//cdn.jsdelivr.net/livejs/4/live.js></script>*@
+
+    </head>
+    <body>
+
+
+
+        <div class="container">
+            <div class="row">
+                <div class="small-12 medium-6 columns">
+                    <br>
+                    Register
+                    <br>
+                    <form method="post" action="@routes.Application.registerUser()" id="form">
+                        <input type="text" id="email" name="emailAddress" placeholder="Email address">
+                        <input type="password" id="password" name="password" placeholder="Password">
+                        <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Retype Password">
+                        <label>
+                            <input type="radio" id="role_applicant" name="role" value="APPLICANT"/> Applicant
+                        </label>
+                        <label>
+                            <input type="radio" id="role_recruiter" name="role" value="RECRUITER"/> Recruiter
+                        </label>
+
+
+
+                        @if(f.hasGlobalErrors) {
+                            @f.error("").message()<br>
+                        }
+                        @if(f.errors().containsKey("emailAddress")){
+                            @for(e <- f.errors().get("emailAddress")) {
+                                @e.message()<br>
+                            }
+                        }
+                        @if(f.errors().containsKey("password")){
+                            @for(e <- f.errors().get("password")) {
+                                @e.message()<br>
+                            }
+                        }
+                        @if(f.errors().containsKey("confirm.password")){
+                            @for(e <- f.errors().get("confirm.password")) {
+                                @e.message()<br>
+                            }
+                        }
+
+                        <br>
+                        <button type="submit">Register</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+        <script>
+            if (location.hostname == "localhost") {
+                $("#email").val("da04452@@umbc.edu")
+                $("#password").val("123123")
+                $("#passwordConfirm").val("123123")
+                $("#role_applicant").prop("checked", "checked")
+            }
+
+        </script>
+    </body>
+</html>
