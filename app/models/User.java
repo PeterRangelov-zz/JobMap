@@ -79,7 +79,7 @@ public class User extends Model {
             if (verifyPassword(emailAddress, password)) {
                 return null;
             }
-            return "Invalid password";
+            ret?urn "Invalid password";
         }
     }
 
